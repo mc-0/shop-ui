@@ -1,0 +1,41 @@
+<p-dialog 
+  [(visible)]="visible" 
+  [header]="'Ingredients - ' + (recipe?.name || 'Recipe')"
+  [modal]="true" 
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="ingredients-modal-dialog"
+  (onHide)="onClose()">
+  
+  <div class="ingredients-content">
+    @if (recipe && recipe.ingredients && recipe.ingredients.length > 0) {
+      <ul class="ingredients-list">
+        @for (ingredient of recipe.ingredients; track $index) {
+          <li class="ingredient-item">
+            <i class="pi pi-check-circle ingredient-icon"></i>
+            <span>{{ ingredient }}</span>
+          </li>
+        }
+      </ul>
+    } @else {
+      <div class="no-ingredients">
+        <i class="pi pi-info-circle"></i>
+        <p>No ingredients listed for this recipe</p>
+      </div>
+    }
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button 
+        pButton 
+        type="button" 
+        label="Close" 
+        (click)="onClose()"
+        severity="secondary"
+        icon="pi pi-times">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>

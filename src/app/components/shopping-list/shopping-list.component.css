@@ -1,0 +1,127 @@
+.shopping-list-container {
+  margin-top: 2rem;
+  background: linear-gradient(135deg, #1f2937 0%, #374151 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #374151;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+}
+
+.selected-recipes {
+  margin-bottom: 2rem;
+}
+
+.selected-recipes h2 {
+  color: #60a5fa;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.empty-message {
+  color: #9ca3af;
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  background-color: #374151;
+  border-radius: 8px;
+  border: 1px dashed #4b5563;
+}
+
+.recipe-list {
+  list-style: none;
+  padding: 0;
+}
+
+.recipe-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+  padding: 1rem;
+  border: 1px solid #4b5563;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  transition: all 0.2s ease;
+}
+
+.recipe-item:hover {
+  background: linear-gradient(135deg, #4b5563 0%, #6b7280 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.recipe-name {
+  flex-grow: 1;
+  font-weight: 500;
+  color: #e5e7eb;
+}
+
+
+/* Dark theme styling for buttons and textarea */
+:host ::ng-deep .p-button {
+  border-radius: 6px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .p-button.p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: 1px solid #059669 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-button.p-button-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border-color: #047857 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+  border: 1px solid #dc2626 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-button.p-button-danger:hover {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%) !important;
+  border-color: #b91c1c !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4) !important;
+}
+
+
+@media (max-width: 768px) {
+  .shopping-list-container {
+    padding: 1rem;
+  }
+
+  .recipe-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  .recipe-name {
+    text-align: center;
+  }
+
+}
+
+@media (max-width: 480px) {
+  .shopping-list-container {
+    margin-top: 1rem;
+    padding: 0.75rem;
+  }
+
+  .recipe-item {
+    padding: 0.75rem 0.5rem;
+  }
+
+
+  h2 {
+    font-size: 1.25rem;
+  }
+}

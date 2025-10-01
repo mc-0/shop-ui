@@ -1,0 +1,54 @@
+<p-dialog 
+  [(visible)]="visible" 
+  header="Shopping List" 
+  [modal]="true" 
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="shopping-list-modal-dialog"
+  (onHide)="onClose()">
+  
+  <div class="shopping-list-content">
+    <div class="copy-instructions">
+      <i class="pi pi-info-circle"></i>
+      <span>Click the text area below to copy your shopping list to clipboard</span>
+    </div>
+    
+    <textarea 
+      pTextarea 
+      [value]="shoppingList" 
+      rows="15"
+      class="shopping-textarea"
+      readonly
+      (click)="copyToClipboard()"
+      placeholder="Your shopping list will appear here...">
+    </textarea>
+    
+    <div class="modal-actions">
+      <button 
+        pButton 
+        type="button" 
+        label="Copy to Clipboard" 
+        (click)="copyToClipboard()"
+        icon="pi pi-copy"
+        severity="info"
+        class="copy-button">
+      </button>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="dialog-footer">
+      <button 
+        pButton 
+        type="button" 
+        label="Close" 
+        (click)="onClose()"
+        severity="secondary"
+        icon="pi pi-times">
+      </button>
+    </div>
+  </ng-template>
+</p-dialog>
+
+<p-toast position="top-right"></p-toast>

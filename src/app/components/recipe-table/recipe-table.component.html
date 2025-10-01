@@ -1,0 +1,134 @@
+<div class="recipe-table-container">
+  <!-- Filter Controls -->
+  <div class="filter-controls">
+    <div class="filter-row">
+      <div class="search-control">
+        <input 
+          pInputText 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          (input)="applyFilters()"
+          placeholder="Search recipes..." 
+          class="search-input" />
+        <i class="pi pi-search search-icon"></i>
+      </div>
+      
+      <div class="filter-dropdowns">
+        <p-select 
+          [options]="typeOptions" 
+          [(ngModel)]="selectedType"
+          (onChange)="applyFilters()"
+          placeholder="All Types"
+          [showClear]="true"
+          class="filter-dropdown">
+        </p-select>
+        
+        <p-select 
+          [options]="cuisineOptions" 
+          [(ngModel)]="selectedCuisine"
+          (onChange)="applyFilters()"
+          placeholder="All Cuisines"
+          [showClear]="true"
+          class="filter-dropdown">
+        </p-select>
+      </div>
+    </div>
+    
+    <div class="sort-controls">
+      <label class="sort-label">Sort by Last Eaten:</label>
+      <p-selectButton 
+        [options]="sortOptions" 
+        [(ngModel)]="sortOrder"
+        (onChange)="applySorting()"
+        optionLabel="label"
+        optionValue="value">
+      </p-selectButton>
+      
+      <button 
+        pButton 
+        type="button" 
+        label="Clear Filters" 
+        (click)="clearAllFilters()" 
+        icon="pi pi-filter-slash"
+        severity="secondary"
+        size="small"
+        class="clear-btn">
+      </button>
+    </div>
+  </div>
+
+  <!-- Simplified Table -->
+  <p-table
+    [value]="filteredRecipes"
+    [scrollable]="true"
+    scrollHeight="400px"
+    responsiveLayout="scroll">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="recipe-name-col">Recipe</th>
+        <th class="last-eaten-col">Last Eaten</th>
+        <th class="url-col">Link</th>
+        <th class="ingredients-col">Ingredients</th>
+        <th class="actions-col">Actions</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-recipe>
+      <tr>
+        <td class="recipe-name-cell">
+          <div class="recipe-info">
+            <div class="recipe-name">{{recipe.name}}</div>
+            <div class="recipe-meta">{{recipe.type}} • {{recipe.cuisine}}</div>
+          </div>
+        </td>
+        <td class="last-eaten-cell">{{recipe.lastEaten}}</td>
+        <td class="url-cell">
+          @if (recipe.url && recipe.url.trim()) {
+            <a [href]="recipe.url" target="_blank" rel="noopener" class="recipe-link">
+              <i class="pi pi-external-link"></i>
+              <span class="link-text">Recipe</span>
+            </a>
+          } @else {
+            <span class="no-link">—</span>
+          }
+        </td>
+        <td class="ingredients-cell">
+          <button 
+            pButton 
+            type="button" 
+            (click)="onViewIngredients(recipe); $event.stopPropagation()"
+            size="small"
+            severity="secondary"
+            class="action-btn view-btn"
+            pTooltip="View ingredients"
+            [text]="false">
+            <i class="pi pi-eye"></i>
+          </button>
+        </td>
+        <td class="actions-cell">
+          <button
+            pButton
+            type="button"
+            (click)="onRecipeSelect(recipe); $event.stopPropagation()"
+            size="small"
+            severity="success"
+            class="action-btn add-btn"
+            pTooltip="Add to list"
+            [text]="false">
+            <i class="pi pi-plus"></i>
+          </button>
+          <button
+            pButton
+            type="button"
+            (click)="onEditRecipe(recipe); $event.stopPropagation()"
+            size="small"
+            severity="info"
+            class="action-btn edit-btn"
+            pTooltip="Edit recipe"
+            [text]="false">
+            <i class="pi pi-pencil"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

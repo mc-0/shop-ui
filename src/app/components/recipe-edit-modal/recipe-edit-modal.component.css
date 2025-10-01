@@ -1,0 +1,174 @@
+/* Dialog styling */
+:host ::ng-deep .recipe-edit-dialog .p-dialog {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  min-width: 500px;
+}
+
+:host ::ng-deep .recipe-edit-dialog .p-dialog-header {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  border-bottom: 1px solid #4b5563;
+  color: #60a5fa;
+  font-weight: 600;
+  border-radius: 12px 12px 0 0;
+}
+
+:host ::ng-deep .recipe-edit-dialog .p-dialog-content {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  padding: 1.5rem;
+}
+
+:host ::ng-deep .recipe-edit-dialog .p-dialog-footer {
+  background-color: #1f2937;
+  border-top: 1px solid #374151;
+  padding: 1rem 1.5rem;
+  border-radius: 0 0 12px 12px;
+}
+
+/* Form styling */
+.recipe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-field label {
+  color: #9ca3af;
+  font-weight: 500;
+  font-size: 0.875rem;
+}
+
+.form-input {
+  width: 100%;
+}
+
+.form-textarea {
+  width: 100%;
+  resize: vertical;
+}
+
+.readonly-field {
+  opacity: 0.7;
+}
+
+.readonly-input {
+  cursor: not-allowed;
+}
+
+/* Input styling for dark theme */
+:host ::ng-deep .form-input.p-inputtext {
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+  color: #e5e7eb !important;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+}
+
+:host ::ng-deep .form-input.p-inputtext:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+}
+
+:host ::ng-deep .form-input.p-inputtext::placeholder {
+  color: #6b7280 !important;
+}
+
+:host ::ng-deep .readonly-input.p-inputtext {
+  background-color: #2d3748 !important;
+  color: #9ca3af !important;
+}
+
+:host ::ng-deep .form-textarea.p-inputtextarea {
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+  color: #e5e7eb !important;
+  border-radius: 6px;
+  padding: 0.75rem;
+  font-size: 0.875rem;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+}
+
+:host ::ng-deep .form-textarea.p-inputtextarea:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+}
+
+:host ::ng-deep .form-textarea.p-inputtextarea::placeholder {
+  color: #6b7280 !important;
+}
+
+/* Button styling */
+.dialog-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+:host ::ng-deep .dialog-buttons .p-button {
+  border-radius: 6px;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.2s ease;
+}
+
+:host ::ng-deep .dialog-buttons .p-button.p-button-secondary {
+  background-color: #4b5563 !important;
+  border: 1px solid #6b7280 !important;
+  color: #e5e7eb !important;
+}
+
+:host ::ng-deep .dialog-buttons .p-button.p-button-secondary:hover {
+  background-color: #6b7280 !important;
+  border-color: #9ca3af !important;
+  transform: translateY(-1px);
+}
+
+:host ::ng-deep .dialog-buttons .p-button.p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: 1px solid #059669 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .dialog-buttons .p-button.p-button-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  border-color: #047857 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  :host ::ng-deep .recipe-edit-dialog .p-dialog {
+    min-width: 90vw;
+    margin: 1rem;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dialog-buttons {
+    flex-direction: column-reverse;
+  }
+
+  :host ::ng-deep .dialog-buttons .p-button {
+    width: 100%;
+  }
+}

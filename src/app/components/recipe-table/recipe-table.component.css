@@ -1,0 +1,491 @@
+.recipe-table-container {
+  width: 100%;
+}
+
+/* Filter Controls */
+.filter-controls {
+  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #4b5563;
+}
+
+.filter-row {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: flex-start;
+}
+
+.search-control {
+  position: relative;
+  flex: 1;
+  min-width: 200px;
+}
+
+.search-input {
+  width: 100%;
+  padding-right: 2.5rem;
+}
+
+.search-icon {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #9ca3af;
+  pointer-events: none;
+}
+
+.filter-dropdowns {
+  display: flex;
+  gap: 1rem;
+}
+
+.filter-dropdown {
+  min-width: 150px;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.sort-label {
+  color: #e5e7eb;
+  font-weight: 500;
+  margin: 0;
+}
+
+.clear-btn {
+  margin-left: auto;
+}
+
+/* Mobile responsive filter controls */
+@media (max-width: 768px) {
+  .filter-row {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .filter-dropdowns {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .filter-dropdown {
+    min-width: auto;
+    width: 100%;
+  }
+  
+  .sort-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+  
+  .clear-btn {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+/* Table column styling */
+.recipe-name-col {
+  width: auto;
+  min-width: 200px;
+}
+
+.last-eaten-col {
+  width: 120px;
+  min-width: 120px;
+}
+
+.url-col {
+  width: 80px;
+  min-width: 80px;
+  text-align: center;
+}
+
+.ingredients-col {
+  width: 60px;
+  min-width: 60px;
+  text-align: center;
+}
+
+.actions-col {
+  width: 100px;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Recipe info cell */
+.recipe-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.recipe-name {
+  font-weight: 600;
+  color: #e5e7eb;
+  font-size: 0.925rem;
+}
+
+.recipe-meta {
+  font-size: 0.75rem;
+  color: #9ca3af;
+  font-style: italic;
+}
+
+/* Mobile table adjustments */
+@media (max-width: 768px) {
+  .recipe-name-col {
+    width: 50%;
+    min-width: 150px;
+  }
+  
+  .last-eaten-col {
+    width: 25%;
+    min-width: 80px;
+  }
+  
+  .url-col {
+    width: 25%;
+    min-width: 60px;
+  }
+  
+  .ingredients-col,
+  .actions-col {
+    width: auto;
+    min-width: 40px;
+  }
+  
+  .recipe-name {
+    font-size: 0.875rem;
+  }
+  
+  .recipe-meta {
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-controls {
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .last-eaten-col {
+    display: none;
+  }
+  
+  .last-eaten-cell {
+    display: none;
+  }
+  
+  .recipe-name-col {
+    width: 60%;
+  }
+}
+
+/* Dark theme table styles */
+:host ::ng-deep .p-datatable {
+  background-color: #1f2937;
+  border: 1px solid #374151;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+  background-color: #374151 !important;
+  color: #e5e7eb !important;
+  border-bottom: 2px solid #4b5563;
+  border-right: 1px solid #4b5563;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  font-weight: 600;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr {
+  background-color: #1f2937;
+  color: #e5e7eb;
+  border-bottom: 1px solid #374151;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
+  background-color: #374151 !important;
+  cursor: pointer;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+  border-right: 1px solid #374151;
+  color: #e5e7eb;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td a {
+  color: #60a5fa;
+  text-decoration: none;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr > td a:hover {
+  color: #93c5fd;
+  text-decoration: underline;
+}
+
+/* Input styling for dark theme */
+:host ::ng-deep .p-inputtext {
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+  color: #e5e7eb !important;
+  border-radius: 4px;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+}
+
+:host ::ng-deep .p-inputtext::placeholder {
+  color: #9ca3af !important;
+}
+
+/* Button styling for dark theme */
+:host ::ng-deep .p-button {
+  background-color: #4b5563 !important;
+  border: 1px solid #6b7280 !important;
+  color: #e5e7eb !important;
+}
+
+:host ::ng-deep .p-button:hover {
+  background-color: #60a5fa !important;
+  border-color: #60a5fa !important;
+}
+
+:host ::ng-deep .p-button:focus {
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+}
+
+/* Action buttons styling */
+.actions-cell {
+  text-align: center;
+  white-space: nowrap;
+  width: 120px;
+}
+
+.action-btn {
+  margin: 0 0.25rem;
+  min-width: 2rem;
+  height: 2rem;
+}
+
+:host ::ng-deep .action-btn.p-button {
+  padding: 0.25rem 0.5rem !important;
+  width: 2rem !important;
+  height: 2rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+:host ::ng-deep .action-btn.p-button .p-button-icon {
+  font-size: 0.875rem;
+  margin: 0 !important;
+}
+
+/* Ensure icons are visible */
+.action-btn i {
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+:host ::ng-deep .add-btn.p-button {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: 1px solid #059669 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .edit-btn.p-button {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  border: 1px solid #0284c7 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .view-btn.p-button {
+  background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+  border: 1px solid #4b5563 !important;
+  color: white !important;
+}
+
+:host ::ng-deep .view-btn.p-button:hover {
+  background: linear-gradient(135deg, #9ca3af 0%, #6b7280 100%) !important;
+  border-color: #6b7280 !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(107, 114, 128, 0.4) !important;
+}
+
+/* Recipe link styling */
+.recipe-link {
+  color: #60a5fa !important;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.recipe-link:hover {
+  color: #93c5fd !important;
+  text-decoration: underline;
+}
+
+.link-text {
+  display: none;
+}
+
+.no-link {
+  color: #6b7280;
+  font-size: 1rem;
+  text-align: center;
+}
+
+/* Show link text on larger screens */
+@media (min-width: 769px) {
+  .link-text {
+    display: inline;
+  }
+}
+
+/* Adjust ingredients cell */
+.ingredients-cell {
+  text-align: center;
+  width: 80px;
+}
+
+/* Dark theme for select components */
+:host ::ng-deep .p-select {
+  background-color: #374151 !important;
+  border: 1px solid #4b5563 !important;
+  color: #e5e7eb !important;
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-select:not(.p-disabled):hover {
+  border-color: #60a5fa !important;
+}
+
+:host ::ng-deep .p-select:not(.p-disabled).p-focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+  color: #e5e7eb !important;
+}
+
+:host ::ng-deep .p-select .p-select-dropdown {
+  color: #9ca3af !important;
+}
+
+:host ::ng-deep .p-select-overlay {
+  background-color: #1f2937 !important;
+  border: 1px solid #4b5563 !important;
+  border-radius: 6px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4) !important;
+}
+
+:host ::ng-deep .p-select-items .p-select-option {
+  color: #e5e7eb !important;
+  background-color: transparent !important;
+}
+
+:host ::ng-deep .p-select-items .p-select-option:hover {
+  background-color: #374151 !important;
+  color: #60a5fa !important;
+}
+
+:host ::ng-deep .p-select-items .p-select-option.p-highlight {
+  background-color: #60a5fa !important;
+  color: white !important;
+}
+
+/* Dark theme for select button */
+:host ::ng-deep .p-selectbutton .p-button {
+  background-color: #4b5563 !important;
+  border: 1px solid #6b7280 !important;
+  color: #e5e7eb !important;
+  border-radius: 6px !important;
+}
+
+:host ::ng-deep .p-selectbutton .p-button:hover {
+  background-color: #6b7280 !important;
+  border-color: #9ca3af !important;
+}
+
+:host ::ng-deep .p-selectbutton .p-button.p-highlight {
+  background-color: #60a5fa !important;
+  border-color: #60a5fa !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-selectbutton .p-button.p-highlight:hover {
+  background-color: #3b82f6 !important;
+  border-color: #3b82f6 !important;
+}
+
+:host ::ng-deep .action-btn.p-button-success {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+  border: 1px solid #059669 !important;
+}
+
+:host ::ng-deep .action-btn.p-button-success:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4) !important;
+}
+
+:host ::ng-deep .action-btn.p-button-info {
+  background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%) !important;
+  border: 1px solid #0284c7 !important;
+}
+
+:host ::ng-deep .action-btn.p-button-info:hover {
+  background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.4) !important;
+}
+
+@media (max-width: 768px) {
+  .ingredients-col,
+  .url-col {
+    display: none;
+  }
+  
+  .ingredients-cell,
+  .url-cell {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.875rem;
+  }
+  
+  :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+    padding: 0.5rem 0.25rem;
+    font-size: 0.875rem;
+  }
+  
+  :host ::ng-deep .p-inputtext {
+    font-size: 0.875rem;
+    padding: 0.25rem;
+  }
+}
