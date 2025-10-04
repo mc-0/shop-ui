@@ -1,0 +1,55 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  header="Add Grocery Item"
+  [style]="{ width: '500px' }">
+
+  <div class="form-container">
+    <div class="form-field">
+      <label for="itemName">Name</label>
+      <input
+        pInputText
+        id="itemName"
+        type="text"
+        [(ngModel)]="newItem.name"
+        placeholder="Enter item name"
+        class="input-field" />
+    </div>
+
+    <div class="form-field">
+      <label for="itemType">Type</label>
+      <p-select
+        id="itemType"
+        [options]="typeOptions"
+        [(ngModel)]="newItem.type"
+        placeholder="Select type"
+        appendTo="body"
+        [scrollHeight]="'250px'"
+        class="select-field">
+      </p-select>
+    </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      (click)="onCancel()"
+      severity="secondary"
+      class="cancel-btn">
+    </button>
+    <button
+      pButton
+      type="button"
+      label="Add Item"
+      (click)="onSave()"
+      [disabled]="!isFormValid()"
+      severity="success"
+      class="save-btn">
+    </button>
+  </ng-template>
+</p-dialog>

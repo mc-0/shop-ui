@@ -1,0 +1,128 @@
+.form-container {
+  padding: 1.5rem;
+  background-color: #111827;
+  border-radius: 8px;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-field label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: white;
+}
+
+.input-field,
+.select-field {
+  width: 100%;
+}
+
+.cancel-btn,
+.save-btn {
+  margin-left: 0.5rem;
+}
+
+/* Fix modal dialog styling */
+:host ::ng-deep .p-dialog {
+  background-color: #640D5F !important;
+  border: 2px solid #EA2264 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background-color: #0D1164 !important;
+  color: white !important;
+  border-bottom: 2px solid #EA2264 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header .p-dialog-title {
+  font-weight: 700 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  background-color: #640D5F !important;
+  color: white !important;
+  padding: 1.5rem !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  background-color: #0D1164 !important;
+  border-top: 2px solid #EA2264 !important;
+  padding: 1.25rem 1.5rem !important;
+}
+
+/* Input field styling */
+:host ::ng-deep .p-inputtext {
+  background-color: #0D1164 !important;
+  border: 2px solid #EA2264 !important;
+  color: white !important;
+  padding: 0.75rem !important;
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-inputtext:focus {
+  border-color: #F78D60 !important;
+  box-shadow: 0 0 0 2px rgba(247, 141, 96, 0.3) !important;
+}
+
+/* Fix select dropdown */
+:host ::ng-deep .p-select {
+  background-color: #0D1164 !important;
+  border: 2px solid #EA2264 !important;
+  color: white !important;
+  border-radius: 6px;
+}
+
+:host ::ng-deep .p-select .p-select-label {
+  padding: 0.75rem !important;
+}
+
+:host ::ng-deep .p-select:focus {
+  border-color: #F78D60 !important;
+  box-shadow: 0 0 0 2px rgba(247, 141, 96, 0.3) !important;
+}
+
+/* Ensure dropdown overlay appears above modal */
+::ng-deep .p-select-overlay {
+  z-index: 10000 !important;
+  background-color: #0D1164 !important;
+  border: 2px solid #EA2264 !important;
+  border-radius: 6px;
+}
+
+::ng-deep .p-select-overlay .p-select-option {
+  background-color: transparent !important;
+  color: white !important;
+}
+
+::ng-deep .p-select-overlay .p-select-option:hover {
+  background-color: #EA2264 !important;
+}
+
+/* Button styling */
+:host ::ng-deep .save-btn.p-button {
+  background: #10b981 !important;
+  border: 2px solid #10b981 !important;
+  color: white !important;
+  padding: 0.75rem 1.25rem !important;
+}
+
+:host ::ng-deep .save-btn.p-button:hover {
+  background: #059669 !important;
+  border: 2px solid #059669 !important;
+}
+
+:host ::ng-deep .cancel-btn.p-button {
+  background: #dc2626 !important;
+  border: 2px solid #dc2626 !important;
+  color: white !important;
+  padding: 0.75rem 1.25rem !important;
+}
+
+:host ::ng-deep .cancel-btn.p-button:hover {
+  background: #b91c1c !important;
+  border: 2px solid #b91c1c !important;
+}

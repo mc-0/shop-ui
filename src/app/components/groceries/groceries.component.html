@@ -1,0 +1,29 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>Groceries</h1>
+    <div class="header-actions">
+      <button pButton type="button" label="Add Item" (click)="openAddModal()" icon="pi pi-plus" severity="success"></button>
+      <button pButton type="button" label="Refresh" (click)="loadGroceries()" icon="pi pi-refresh" severity="info"></button>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <app-grocery-table
+      [groceries]="groceries"
+      [selectedGroceries]="selectedGroceries"
+      (grocerySelected)="onGrocerySelected($event)"
+      (deleteGrocery)="onDeleteGrocery($event)">
+    </app-grocery-table>
+
+    <app-grocery-add-modal
+      [(visible)]="showAddModal"
+      (itemAdded)="onItemAdded($event)">
+    </app-grocery-add-modal>
+
+    <app-grocery-delete-modal
+      [(visible)]="showDeleteModal"
+      [grocery]="deletingGrocery"
+      (confirmDelete)="onConfirmDelete($event)">
+    </app-grocery-delete-modal>
+  </main>
+</div>

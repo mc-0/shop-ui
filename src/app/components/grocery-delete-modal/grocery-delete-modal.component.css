@@ -1,0 +1,42 @@
+.delete-confirmation {
+  padding: 1rem 0;
+  background-color: transparent;
+}
+
+.delete-confirmation p {
+  margin-bottom: 0.75rem;
+  color: white;
+}
+
+.warning-text {
+  color: #F78D60;
+  font-size: 0.9rem;
+  font-style: italic;
+}
+
+.cancel-btn,
+.confirm-btn {
+  margin-left: 0.5rem;
+}
+
+/* Fix modal dialog styling */
+:host ::ng-deep .p-dialog {
+  background-color: #640D5F !important;
+  border: 2px solid #EA2264 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header {
+  background-color: #0D1164 !important;
+  color: white !important;
+  border-bottom: 2px solid #EA2264 !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-content {
+  background-color: #640D5F !important;
+  color: white !important;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-footer {
+  background-color: #0D1164 !important;
+  border-top: 2px solid #EA2264 !important;
+}

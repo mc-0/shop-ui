@@ -1,0 +1,33 @@
+<p-dialog
+  [(visible)]="visible"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  header="Confirm Delete"
+  [style]="{ width: '400px' }">
+
+  <div class="delete-confirmation">
+    <p>Are you sure you want to delete <strong>{{ grocery?.name }}</strong>?</p>
+    <p class="warning-text">This action cannot be undone.</p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <button
+      pButton
+      type="button"
+      label="Cancel"
+      (click)="onCancel()"
+      severity="secondary"
+      class="cancel-btn">
+    </button>
+    <button
+      pButton
+      type="button"
+      label="Delete"
+      (click)="onConfirm()"
+      severity="danger"
+      class="confirm-btn">
+    </button>
+  </ng-template>
+</p-dialog>
