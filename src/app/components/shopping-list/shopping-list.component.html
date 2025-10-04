@@ -1,32 +1,47 @@
 <div class="shopping-list-container">
-  <div class="selected-recipes">
-    <h2>Selected Recipes ({{ selectedRecipes.length }})</h2>
+  <div class="selected-items">
+    <h2>Shopping List ({{ selectedRecipes.length }})</h2>
     @if (selectedRecipes.length === 0) {
-      <p class="empty-message">Click on a recipe row to add it to your list</p>
+      <p class="empty-message">Add recipes or groceries to build your list</p>
     } @else {
-      <ul class="recipe-list">
-        @for (recipe of selectedRecipes; track recipe.name) {
-          <li class="recipe-item">
-            <span class="recipe-name">{{ recipe.name }}</span>
-            <button 
-              pButton 
-              type="button" 
-              label="Remove" 
-              (click)="removeRecipe(recipe)" 
-              icon="pi pi-times" 
-              size="small" 
-              severity="danger">
-            </button>
-          </li>
+      <div class="items-list">
+        @for (item of selectedRecipes; track item.name) {
+          <div class="item-row">
+            <div class="item-info">
+              <span class="item-name">{{ item.name }}</span>
+            </div>
+            <div class="store-buttons">
+              @for (store of stores; track store) {
+                <button
+                  pButton
+                  type="button"
+                  [label]="store"
+                  (click)="selectStore(item, store)"
+                  [class.selected]="item.store === store"
+                  class="store-button"
+                  size="small">
+                </button>
+              }
+              <button
+                pButton
+                type="button"
+                icon="pi pi-times"
+                (click)="removeItem(item)"
+                class="remove-button"
+                size="small"
+                severity="danger">
+              </button>
+            </div>
+          </div>
         }
-      </ul>
-      <button 
-        pButton 
-        type="button" 
-        label="Generate Shopping List" 
-        (click)="generateShoppingList()" 
-        icon="pi pi-shopping-cart" 
-        class="generate-button" 
+      </div>
+      <button
+        pButton
+        type="button"
+        label="Shop!"
+        (click)="generateShoppingList()"
+        icon="pi pi-shopping-cart"
+        class="generate-button"
         severity="success">
       </button>
     }
@@ -34,6 +49,6 @@
 
   <app-shopping-list-modal
     [(visible)]="showShoppingListModal"
-    [shoppingList]="shoppingList">
+    [shoppingList]="finalShoppingList">
   </app-shopping-list-modal>
 </div>

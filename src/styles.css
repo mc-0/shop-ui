@@ -5,8 +5,8 @@
 html, body {
   margin: 0;
   padding: 0;
-  background-color: #111827 !important;
-  color: #e5e7eb;
+  background-color: #0D1164 !important;
+  color: white;
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
 }
@@ -19,5 +19,5 @@ html, body {
 app-root {
   display: block;
   min-height: 100vh;
-  background-color: #111827;
+  background-color: #0D1164;
 }

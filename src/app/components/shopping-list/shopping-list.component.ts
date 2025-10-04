@@ -2,7 +2,16 @@ import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ShoppingListModalComponent } from '../shopping-list-modal/shopping-list-modal.component';
-import { Recipe } from '../../services/recipe.service';
+import { SelectionService, SelectionItem } from '../../services/selection.service';
+
+type Store = 'M' | 'BJ' | 'FT' | 'P';
+
+const STORE_NAMES: Record<Store, string> = {
+  'M': 'Meijer',
+  'BJ': "BJ's",
+  'FT': 'Fresh Thyme',
+  'P': 'Papaya'
+};
 
 @Component({
   selector: 'app-shopping-list',
@@ -12,30 +21,59 @@ import { Recipe } from '../../services/recipe.service';
   imports: [CommonModule, ButtonModule, ShoppingListModalComponent]
 })
 export class ShoppingListComponent {
-  @Input() selectedRecipes: Recipe[] = [];
+  @Input() selectedRecipes: SelectionItem[] = [];
   showShoppingListModal: boolean = false;
-  shoppingList: string = '';
+  finalShoppingList: string = '';
+  stores: Store[] = ['M', 'BJ', 'FT', 'P'];
+  storeNames = STORE_NAMES;
 
-  removeRecipe(recipe: Recipe) {
-    const index = this.selectedRecipes.findIndex(r => r.name === recipe.name);
-    if (index > -1) {
-      this.selectedRecipes.splice(index, 1);
-    }
+  constructor(private selectionService: SelectionService) {}
+
+  removeItem(item: SelectionItem) {
+    this.selectionService.removeItem(item.name);
+  }
+
+  selectStore(item: SelectionItem, store: Store) {
+    this.selectionService.setStore(item.name, store);
   }
 
   generateShoppingList() {
-    const allIngredients: string[] = [];
-    this.selectedRecipes.forEach(recipe => {
-      if (recipe.ingredients && Array.isArray(recipe.ingredients)) {
-        allIngredients.push(...recipe.ingredients);
+    // Group items by store
+    const itemsByStore: Record<string, string[]> = {};
+    const noStoreItems: string[] = [];
+
+    this.selectedRecipes.forEach(item => {
+      if (item.store) {
+        const storeName = STORE_NAMES[item.store as Store];
+        if (!itemsByStore[storeName]) {
+          itemsByStore[storeName] = [];
+        }
+        itemsByStore[storeName].push(item.name);
+      } else {
+        noStoreItems.push(item.name);
       }
     });
 
-    const uniqueIngredients = [...new Set(allIngredients.map(i => i.toLowerCase()))]
-      .sort()
-      .map(ingredient => ingredient.charAt(0).toUpperCase() + ingredient.slice(1));
+    // Build the formatted shopping list
+    let formattedList = '';
 
-    this.shoppingList = uniqueIngredients.map(i => `- ${i}`).join('\n');
+    // Add items grouped by store
+    Object.keys(itemsByStore).forEach(storeName => {
+      formattedList += `* ${storeName} *\n`;
+      itemsByStore[storeName].forEach(item => {
+        formattedList += `- ${item}\n`;
+      });
+      formattedList += '\n';
+    });
+
+    // Add items without a store (no header)
+    if (noStoreItems.length > 0) {
+      noStoreItems.forEach(item => {
+        formattedList += `- ${item}\n`;
+      });
+    }
+
+    this.finalShoppingList = formattedList.trim();
     this.showShoppingListModal = true;
   }
 }

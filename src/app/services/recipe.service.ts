@@ -20,7 +20,7 @@ export class RecipeService {
   constructor(private http: HttpClient) {}
 
   getAllRecipes(): Observable<Recipe[]> {
-    return this.http.get<Recipe[]>(`${this.apiUrl}/all`);
+    return this.http.get<Recipe[]>(`${this.apiUrl}`);
   }
 
   updateRecipe(recipe: Recipe): Observable<Recipe> {

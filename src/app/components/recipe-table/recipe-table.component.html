@@ -90,14 +90,13 @@
         </td>
         <td class="last-eaten-cell">{{recipe.lastEaten}}</td>
         <td class="ingredients-cell">
-          <button 
-            pButton 
-            type="button" 
+          <button
+            pButton
+            type="button"
             (click)="onViewIngredients(recipe); $event.stopPropagation()"
             size="small"
             severity="secondary"
             class="action-btn view-btn"
-            pTooltip="View ingredients"
             [text]="false">
             <i class="pi pi-eye"></i>
           </button>
@@ -110,9 +109,8 @@
             size="small"
             severity="success"
             class="action-btn add-btn"
-            pTooltip="Add to list"
-            [text]="false">
-            <i class="pi pi-plus"></i>
+            [disabled]="isRecipeSelected(recipe)">
+            <i class="pi pi-plus"></i> Add
           </button>
           <button
             pButton
@@ -121,9 +119,8 @@
             size="small"
             severity="info"
             class="action-btn edit-btn"
-            pTooltip="Edit recipe"
-            [text]="false">
-            <i class="pi pi-pencil"></i>
+            [disabled]="isRecipeSelected(recipe)">
+            <i class="pi pi-pencil"></i> Edit
           </button>
         </td>
       </tr>

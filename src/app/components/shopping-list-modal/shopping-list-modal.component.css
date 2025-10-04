@@ -1,30 +1,30 @@
 /* Dialog styling */
 :host ::ng-deep .shopping-list-modal-dialog .p-dialog {
-  background-color: #1f2937;
-  border: 1px solid #374151;
+  background-color: #640D5F;
+  border: 2px solid #EA2264;
   border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
   min-width: 500px;
   max-width: 700px;
 }
 
 :host ::ng-deep .shopping-list-modal-dialog .p-dialog-header {
-  background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
-  border-bottom: 1px solid #4b5563;
-  color: #60a5fa;
+  background: linear-gradient(135deg, #0D1164 0%, #640D5F 100%);
+  border-bottom: 2px solid #EA2264;
+  color: #EA2264;
   font-weight: 600;
   border-radius: 12px 12px 0 0;
 }
 
 :host ::ng-deep .shopping-list-modal-dialog .p-dialog-content {
-  background-color: #1f2937;
-  color: #e5e7eb;
+  background-color: #640D5F;
+  color: white;
   padding: 1.5rem;
 }
 
 :host ::ng-deep .shopping-list-modal-dialog .p-dialog-footer {
-  background-color: #1f2937;
-  border-top: 1px solid #374151;
+  background-color: #0D1164;
+  border-top: 2px solid #EA2264;
   padding: 1rem 1.5rem;
   border-radius: 0 0 12px 12px;
 }
@@ -43,16 +43,16 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.75rem;
-  background-color: #374151;
+  background-color: #0D1164;
   border-radius: 6px;
-  border: 1px solid #4b5563;
-  color: #9ca3af;
+  border: 1px solid #EA2264;
+  color: #F78D60;
   font-size: 0.875rem;
 }
 
 .copy-instructions i,
 .instructions i {
-  color: #60a5fa;
+  color: #EA2264;
   font-size: 1rem;
 }
 
@@ -66,8 +66,8 @@
 }
 
 .shopping-textarea:hover {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.2) !important;
+  border-color: #F78D60 !important;
+  box-shadow: 0 0 0 2px rgba(247, 141, 96, 0.3) !important;
 }
 
 .modal-actions {
@@ -81,9 +81,9 @@
 
 /* Dark theme styling for textarea */
 :host ::ng-deep .shopping-textarea.p-inputtextarea {
-  background-color: #1f2937 !important;
-  border: 2px solid #4b5563 !important;
-  color: #e5e7eb !important;
+  background-color: #0D1164 !important;
+  border: 2px solid #EA2264 !important;
+  color: white !important;
   border-radius: 8px;
   padding: 1rem;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -92,8 +92,8 @@
 }
 
 :host ::ng-deep .shopping-textarea.p-inputtextarea:focus {
-  border-color: #60a5fa !important;
-  box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2) !important;
+  border-color: #F78D60 !important;
+  box-shadow: 0 0 0 3px rgba(247, 141, 96, 0.3) !important;
 }
 
 /* Button styling */
@@ -108,15 +108,15 @@
 }
 
 :host ::ng-deep .copy-button.p-button-info {
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%) !important;
-  border: 1px solid #3b82f6 !important;
+  background: linear-gradient(135deg, #F78D60 0%, #EA2264 100%) !important;
+  border: 1px solid #F78D60 !important;
   color: white !important;
 }
 
 :host ::ng-deep .copy-button.p-button-info:hover {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
-  border-color: #2563eb !important;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4) !important;
+  background: linear-gradient(135deg, #EA2264 0%, #F78D60 100%) !important;
+  border-color: #EA2264 !important;
+  box-shadow: 0 4px 12px rgba(247, 141, 96, 0.5) !important;
 }
 
 
@@ -129,14 +129,14 @@
 }
 
 :host ::ng-deep .dialog-footer .p-button.p-button-secondary {
-  background-color: #4b5563 !important;
-  border: 1px solid #6b7280 !important;
-  color: #e5e7eb !important;
+  background-color: #640D5F !important;
+  border: 1px solid #EA2264 !important;
+  color: white !important;
 }
 
 :host ::ng-deep .dialog-footer .p-button.p-button-secondary:hover {
-  background-color: #6b7280 !important;
-  border-color: #9ca3af !important;
+  background-color: #EA2264 !important;
+  border-color: #F78D60 !important;
   transform: translateY(-1px);
 }
 
@@ -155,14 +155,14 @@
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem;
-  background-color: #374151;
+  background-color: #0D1164;
   border-radius: 8px;
-  border: 1px solid #4b5563;
+  border: 1px solid #EA2264;
   gap: 1rem;
 }
 
 .ingredient-name {
-  color: #e5e7eb;
+  color: white;
   font-weight: 500;
   flex: 1;
   min-width: 0;
@@ -179,21 +179,21 @@
   padding: 0.5rem 0.75rem !important;
   font-size: 0.875rem !important;
   border-radius: 6px !important;
-  background-color: #4b5563 !important;
-  border: 1px solid #6b7280 !important;
-  color: #9ca3af !important;
+  background-color: #640D5F !important;
+  border: 1px solid #640D5F !important;
+  color: white !important;
   transition: all 0.2s ease !important;
 }
 
 .store-button:hover {
-  background-color: #6b7280 !important;
-  border-color: #9ca3af !important;
+  background-color: #EA2264 !important;
+  border-color: #EA2264 !important;
   transform: translateY(-1px);
 }
 
 .store-button.selected {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  border-color: #059669 !important;
+  background: linear-gradient(135deg, #F78D60 0%, #EA2264 100%) !important;
+  border-color: #F78D60 !important;
   color: white !important;
   font-weight: 600 !important;
 }
@@ -206,13 +206,13 @@
 }
 
 :host ::ng-deep .remove-button.p-button-danger {
-  background-color: #dc2626 !important;
-  border: 1px solid #dc2626 !important;
+  background-color: #EA2264 !important;
+  border: 1px solid #EA2264 !important;
 }
 
 :host ::ng-deep .remove-button.p-button-danger:hover {
-  background-color: #b91c1c !important;
-  border-color: #b91c1c !important;
+  background-color: #640D5F !important;
+  border-color: #640D5F !important;
   transform: translateY(-1px);
 }
 
@@ -222,15 +222,15 @@
 }
 
 :host ::ng-deep .shop-button.p-button-success {
-  background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
-  border: 1px solid #059669 !important;
+  background: linear-gradient(135deg, #F78D60 0%, #EA2264 100%) !important;
+  border: 1px solid #F78D60 !important;
   color: white !important;
 }
 
 :host ::ng-deep .shop-button.p-button-success:hover {
-  background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
-  border-color: #047857 !important;
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4) !important;
+  background: linear-gradient(135deg, #EA2264 0%, #F78D60 100%) !important;
+  border-color: #EA2264 !important;
+  box-shadow: 0 4px 12px rgba(247, 141, 96, 0.5) !important;
   transform: translateY(-1px);
 }
 

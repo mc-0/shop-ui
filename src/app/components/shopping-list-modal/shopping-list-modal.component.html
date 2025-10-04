@@ -1,6 +1,6 @@
 <p-dialog
   [(visible)]="visible"
-  [header]="showStoreSelection ? 'Select Stores for Ingredients' : 'Shopping List'"
+  header="Shopping List"
   [modal]="true"
   [closable]="true"
   [draggable]="false"
@@ -8,53 +8,7 @@
   styleClass="shopping-list-modal-dialog"
   (onHide)="onClose()">
 
-  <!-- Store Selection View -->
-  <div *ngIf="showStoreSelection" class="store-selection-content">
-    <div class="instructions">
-      <i class="pi pi-info-circle"></i>
-      <span>Select a store for each ingredient, then click "Shop!" to generate your list</span>
-    </div>
-
-    <div class="ingredients-list">
-      <div *ngFor="let ingredient of ingredients" class="ingredient-item">
-        <span class="ingredient-name">{{ ingredient.name }}</span>
-        <div class="store-buttons">
-          <button
-            *ngFor="let store of stores"
-            pButton
-            type="button"
-            [label]="store"
-            (click)="selectStore(ingredient, store)"
-            [class.selected]="ingredient.store === store"
-            class="store-button">
-          </button>
-          <button
-            pButton
-            type="button"
-            icon="pi pi-times"
-            (click)="removeIngredient(ingredient)"
-            class="remove-button"
-            severity="danger">
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal-actions">
-      <button
-        pButton
-        type="button"
-        label="Shop!"
-        (click)="generateShoppingList()"
-        icon="pi pi-shopping-cart"
-        severity="success"
-        class="shop-button">
-      </button>
-    </div>
-  </div>
-
-  <!-- Final Shopping List View -->
-  <div *ngIf="!showStoreSelection" class="shopping-list-content">
+  <div class="shopping-list-content">
     <div class="copy-instructions">
       <i class="pi pi-info-circle"></i>
       <span>Click the text area or the copy button below to copy your shopping list</span>
@@ -62,7 +16,7 @@
 
     <textarea
       pTextarea
-      [value]="finalShoppingList"
+      [value]="shoppingList"
       rows="15"
       class="shopping-textarea"
       readonly
