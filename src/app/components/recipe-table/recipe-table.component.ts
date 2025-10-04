@@ -18,6 +18,7 @@ import { Recipe } from '../../services/recipe.service';
 })
 export class RecipeTableComponent implements OnChanges {
   @Input() recipes: Recipe[] = [];
+  @Input() selectedRecipes: Recipe[] = [];
   @Output() recipeSelected = new EventEmitter<Recipe>();
   @Output() editRecipe = new EventEmitter<Recipe>();
   @Output() viewIngredients = new EventEmitter<Recipe>();
@@ -185,5 +186,9 @@ export class RecipeTableComponent implements OnChanges {
   onViewIngredients(recipe: Recipe) {
     console.log('View ingredients clicked:', recipe.name);
     this.viewIngredients.emit(recipe);
+  }
+
+  isRecipeSelected(recipe: Recipe): boolean {
+    return this.selectedRecipes.some(selected => selected.name === recipe.name);
   }
 }

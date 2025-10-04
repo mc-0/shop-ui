@@ -67,16 +67,17 @@
       </textarea>
     </div>
 
-    <div class="form-field readonly-field">
+    <div class="form-field">
       <label for="lastEaten">Last Eaten</label>
-      <input 
+      <p-datepicker
         id="lastEaten"
-        type="text" 
-        pInputText 
-        [value]="editedRecipe.lastEaten" 
-        readonly
-        class="form-input readonly-input"
-        placeholder="Date is read-only" />
+        [(ngModel)]="lastEatenDate"
+        dateFormat="yy-mm-dd"
+        [showIcon]="true"
+        placeholder="Select date"
+        styleClass="form-datepicker"
+        appendTo="body">
+      </p-datepicker>
     </div>
   </div>
 

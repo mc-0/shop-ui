@@ -104,12 +104,6 @@
   min-width: 120px;
 }
 
-.url-col {
-  width: 80px;
-  min-width: 80px;
-  text-align: center;
-}
-
 .ingredients-col {
   width: 60px;
   min-width: 60px;
@@ -135,6 +129,26 @@
   font-size: 0.925rem;
 }
 
+.recipe-link {
+  color: #60a5fa !important;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.recipe-link:hover {
+  color: #93c5fd !important;
+  text-decoration: underline;
+}
+
+.link-icon {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
 .recipe-meta {
   font-size: 0.75rem;
   color: #9ca3af;
@@ -151,11 +165,6 @@
   .last-eaten-col {
     width: 25%;
     min-width: 80px;
-  }
-  
-  .url-col {
-    width: 25%;
-    min-width: 60px;
   }
   
   .ingredients-col,
@@ -220,6 +229,15 @@
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr:hover {
   background-color: #374151 !important;
   cursor: pointer;
+}
+
+/* Selected recipe row styling */
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.selected-recipe {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.15) 0%, rgba(59, 130, 246, 0.1) 100%) !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody > tr.selected-recipe:hover {
+  background: linear-gradient(135deg, rgba(96, 165, 250, 0.25) 0%, rgba(59, 130, 246, 0.2) 100%) !important;
 }
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
@@ -328,39 +346,6 @@
   box-shadow: 0 2px 8px rgba(107, 114, 128, 0.4) !important;
 }
 
-/* Recipe link styling */
-.recipe-link {
-  color: #60a5fa !important;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s ease;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  font-size: 0.875rem;
-}
-
-.recipe-link:hover {
-  color: #93c5fd !important;
-  text-decoration: underline;
-}
-
-.link-text {
-  display: none;
-}
-
-.no-link {
-  color: #6b7280;
-  font-size: 1rem;
-  text-align: center;
-}
-
-/* Show link text on larger screens */
-@media (min-width: 769px) {
-  .link-text {
-    display: inline;
-  }
-}
 
 /* Adjust ingredients cell */
 .ingredients-cell {
@@ -462,13 +447,11 @@
 }
 
 @media (max-width: 768px) {
-  .ingredients-col,
-  .url-col {
+  .ingredients-col {
     display: none;
   }
   
-  .ingredients-cell,
-  .url-cell {
+  .ingredients-cell {
     display: none;
   }
 }

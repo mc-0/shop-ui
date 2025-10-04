@@ -35,7 +35,7 @@ export class ShoppingListComponent {
       .sort()
       .map(ingredient => ingredient.charAt(0).toUpperCase() + ingredient.slice(1));
 
-    this.shoppingList = uniqueIngredients.join('\n');
+    this.shoppingList = uniqueIngredients.map(i => `- ${i}`).join('\n');
     this.showShoppingListModal = true;
   }
 }
