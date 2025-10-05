@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TableModule } from 'primeng/table';
@@ -15,7 +15,7 @@ import { GroceryItem } from '../../services/grocery.service';
   standalone: true,
   imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, Select, TooltipModule]
 })
-export class GroceryTableComponent {
+export class GroceryTableComponent implements OnChanges {
   @Input() groceries: GroceryItem[] = [];
   @Input() selectedGroceries: GroceryItem[] = [];
   @Output() grocerySelected = new EventEmitter<GroceryItem>();
@@ -36,7 +36,11 @@ export class GroceryTableComponent {
     { label: 'Legume', value: 'legume' },
     { label: 'Nuts/Seeds', value: 'nuts/seeds' },
     { label: 'Condiments', value: 'condiments' },
-    { label: 'Seafood', value: 'seafood' }
+    { label: 'Seafood', value: 'seafood' },
+    { label: 'Snacks', value: 'snacks' },
+    { label: 'Cereal', value: 'cereal' },
+    { label: 'Dessert', value: 'dessert' },
+    { label: 'Bread', value: 'bread' }
   ];
 
   ngOnChanges() {

@@ -1,6 +1,20 @@
 <div class="shopping-list-container">
   <div class="selected-items">
-    <h2>Shopping List ({{ selectedRecipes.length }})</h2>
+    <div class="header-row">
+      <h2>Shopping List ({{ selectedRecipes.length }})</h2>
+      @if (selectedRecipes.length > 0) {
+        <button
+          pButton
+          type="button"
+          label="Clear All"
+          (click)="clearAll()"
+          icon="pi pi-trash"
+          class="clear-all-btn"
+          severity="danger"
+          size="small">
+        </button>
+      }
+    </div>
     @if (selectedRecipes.length === 0) {
       <p class="empty-message">Add recipes or groceries to build your list</p>
     } @else {

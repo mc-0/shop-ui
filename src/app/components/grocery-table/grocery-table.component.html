@@ -13,19 +13,15 @@
         <i class="pi pi-search search-icon"></i>
       </div>
 
-      <div class="filter-dropdowns">
-        <p-select
-          [options]="typeOptions"
-          [(ngModel)]="selectedType"
-          (onChange)="applyFilters()"
-          placeholder="All Types"
-          [showClear]="true"
-          class="filter-dropdown">
-        </p-select>
-      </div>
-    </div>
+      <p-select
+        [options]="typeOptions"
+        [(ngModel)]="selectedType"
+        (onChange)="applyFilters()"
+        placeholder="All Types"
+        [showClear]="true"
+        class="filter-dropdown">
+      </p-select>
 
-    <div class="sort-controls">
       <button
         pButton
         type="button"
@@ -63,7 +59,8 @@
             (click)="onGrocerySelect(grocery); $event.stopPropagation()"
             size="small"
             severity="success"
-            class="action-btn add-btn">
+            class="action-btn add-btn"
+            [disabled]="isGrocerySelected(grocery)">
             <i class="pi pi-plus"></i> Add
           </button>
           <button
@@ -72,7 +69,8 @@
             (click)="onDeleteGrocery(grocery); $event.stopPropagation()"
             size="small"
             severity="danger"
-            class="action-btn delete-btn">
+            class="action-btn delete-btn"
+            [disabled]="isGrocerySelected(grocery)">
             <i class="pi pi-trash"></i> Delete
           </button>
         </td>

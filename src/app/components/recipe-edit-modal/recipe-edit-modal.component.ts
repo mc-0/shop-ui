@@ -22,6 +22,7 @@ export class RecipeEditModalComponent implements OnChanges {
   @Output() recipeSaved = new EventEmitter<Recipe>();
 
   editedRecipe: Recipe = {
+    id: '',
     name: '',
     type: '',
     cuisine: '',

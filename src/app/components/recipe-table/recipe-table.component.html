@@ -3,52 +3,39 @@
   <div class="filter-controls">
     <div class="filter-row">
       <div class="search-control">
-        <input 
-          pInputText 
-          type="text" 
+        <input
+          pInputText
+          type="text"
           [(ngModel)]="searchTerm"
           (input)="applyFilters()"
-          placeholder="Search recipes..." 
+          placeholder="Search recipes..."
           class="search-input" />
         <i class="pi pi-search search-icon"></i>
       </div>
-      
-      <div class="filter-dropdowns">
-        <p-select 
-          [options]="typeOptions" 
-          [(ngModel)]="selectedType"
-          (onChange)="applyFilters()"
-          placeholder="All Types"
-          [showClear]="true"
-          class="filter-dropdown">
-        </p-select>
-        
-        <p-select 
-          [options]="cuisineOptions" 
-          [(ngModel)]="selectedCuisine"
-          (onChange)="applyFilters()"
-          placeholder="All Cuisines"
-          [showClear]="true"
-          class="filter-dropdown">
-        </p-select>
-      </div>
-    </div>
-    
-    <div class="sort-controls">
-      <label class="sort-label">Sort by Last Eaten:</label>
-      <p-selectButton 
-        [options]="sortOptions" 
-        [(ngModel)]="sortOrder"
-        (onChange)="applySorting()"
-        optionLabel="label"
-        optionValue="value">
-      </p-selectButton>
-      
-      <button 
-        pButton 
-        type="button" 
-        label="Clear Filters" 
-        (click)="clearAllFilters()" 
+
+      <p-select
+        [options]="typeOptions"
+        [(ngModel)]="selectedType"
+        (onChange)="applyFilters()"
+        placeholder="All Types"
+        [showClear]="true"
+        class="filter-dropdown">
+      </p-select>
+
+      <p-select
+        [options]="cuisineOptions"
+        [(ngModel)]="selectedCuisine"
+        (onChange)="applyFilters()"
+        placeholder="All Cuisines"
+        [showClear]="true"
+        class="filter-dropdown">
+      </p-select>
+
+      <button
+        pButton
+        type="button"
+        label="Clear Filters"
+        (click)="clearAllFilters()"
         icon="pi pi-filter-slash"
         severity="secondary"
         size="small"
@@ -62,11 +49,18 @@
     [value]="filteredRecipes"
     [scrollable]="true"
     scrollHeight="400px"
-    responsiveLayout="scroll">
+    responsiveLayout="scroll"
+    sortMode="single">
     <ng-template pTemplate="header">
       <tr>
-        <th class="recipe-name-col">Recipe</th>
-        <th class="last-eaten-col">Last Eaten</th>
+        <th class="recipe-name-col" pSortableColumn="name">
+          Recipe
+          <p-sortIcon field="name"></p-sortIcon>
+        </th>
+        <th class="last-eaten-col" pSortableColumn="lastEaten">
+          Last Eaten
+          <p-sortIcon field="lastEaten"></p-sortIcon>
+        </th>
         <th class="ingredients-col">Ingredients</th>
         <th class="actions-col">Actions</th>
       </tr>

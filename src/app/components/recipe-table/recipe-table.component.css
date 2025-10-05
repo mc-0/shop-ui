@@ -3,6 +3,8 @@
   background-color: #111827;
   border-radius: 12px;
   padding: 1rem;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 /* Filter Controls */
@@ -16,14 +18,14 @@
 
 .filter-row {
   display: flex;
-  gap: 1rem;
-  margin-bottom: 1rem;
-  align-items: flex-start;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .search-control {
   position: relative;
-  flex: 1;
+  flex: 0 1 250px;
   min-width: 200px;
 }
 
@@ -41,26 +43,9 @@
   pointer-events: none;
 }
 
-.filter-dropdowns {
-  display: flex;
-  gap: 1rem;
-}
-
 .filter-dropdown {
   min-width: 150px;
-}
-
-.sort-controls {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.sort-label {
-  color: white;
-  font-weight: 500;
-  margin: 0;
+  flex: 0 1 150px;
 }
 
 .clear-btn {
@@ -68,28 +53,23 @@
 }
 
 /* Mobile responsive filter controls */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .filter-row {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  
-  .filter-dropdowns {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .filter-dropdown {
-    min-width: auto;
-    width: 100%;
-  }
-  
-  .sort-controls {
     flex-direction: column;
     align-items: stretch;
     gap: 0.75rem;
   }
-  
+
+  .search-control {
+    flex: 1;
+    min-width: auto;
+  }
+
+  .filter-dropdown {
+    min-width: auto;
+    width: 100%;
+  }
+
   .clear-btn {
     margin-left: 0;
     width: 100%;
@@ -165,47 +145,91 @@
 
 /* Mobile table adjustments */
 @media (max-width: 768px) {
-  .recipe-name-col {
-    width: 50%;
-    min-width: 150px;
+  .recipe-table-container {
+    padding: 0.5rem;
   }
-  
-  .last-eaten-col {
-    width: 25%;
-    min-width: 80px;
-  }
-  
-  .ingredients-col,
-  .actions-col {
-    width: auto;
-    min-width: 40px;
-  }
-  
-  .recipe-name {
-    font-size: 0.875rem;
-  }
-  
-  .recipe-meta {
-    font-size: 0.7rem;
-  }
-}
 
-@media (max-width: 480px) {
   .filter-controls {
     padding: 1rem;
     margin-bottom: 1rem;
   }
-  
+
+  .recipe-name-col {
+    width: 50%;
+    min-width: 120px;
+  }
+
+  .last-eaten-col {
+    width: 25%;
+    min-width: 70px;
+    font-size: 0.75rem;
+  }
+
+  .ingredients-col {
+    width: 60px;
+    min-width: 60px;
+  }
+
+  .actions-col {
+    width: auto;
+    min-width: 100px;
+  }
+
+  .recipe-name {
+    font-size: 0.875rem;
+  }
+
+  .recipe-meta {
+    font-size: 0.7rem;
+  }
+
+  :host ::ng-deep .action-btn.p-button {
+    padding: 0.4rem 0.5rem !important;
+    font-size: 0.8rem;
+  }
+
+  :host ::ng-deep .action-btn.p-button .p-button-label {
+    display: none;
+  }
+
+  :host ::ng-deep .action-btn.p-button i {
+    margin: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .recipe-table-container {
+    padding: 0.25rem;
+  }
+
+  .filter-controls {
+    padding: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
   .last-eaten-col {
     display: none;
   }
-  
+
   .last-eaten-cell {
     display: none;
   }
-  
+
   .recipe-name-col {
     width: 60%;
+  }
+
+  .ingredients-col {
+    display: none;
+  }
+
+  .ingredients-cell {
+    display: none;
+  }
+
+  .actions-col {
+    width: 40%;
+    min-width: 80px;
   }
 }
 
@@ -235,6 +259,29 @@
   text-align: center !important;
   padding-left: 0.5rem !important;
   padding-right: 0.5rem !important;
+}
+
+/* Sortable column styling */
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th.p-sortable-column {
+  cursor: pointer;
+  user-select: none;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th.p-sortable-column:hover {
+  background: linear-gradient(135deg, #EA2264 0%, #640D5F 100%) !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th .p-sortable-column-icon {
+  color: #F78D60;
+  margin-left: 0.5rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th.p-highlight {
+  background: linear-gradient(135deg, #EA2264 0%, #0D1164 100%) !important;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead > tr > th.p-highlight .p-sortable-column-icon {
+  color: white;
 }
 
 :host ::ng-deep .p-datatable .p-datatable-tbody > tr {
@@ -457,30 +504,6 @@
   color: white !important;
 }
 
-/* Dark theme for select button */
-:host ::ng-deep .p-selectbutton .p-button {
-  background-color: #640D5F !important;
-  border: 2px solid #EA2264 !important;
-  color: white !important;
-  border-radius: 6px !important;
-}
-
-:host ::ng-deep .p-selectbutton .p-button:hover {
-  background-color: #EA2264 !important;
-  border: 2px solid #F78D60 !important;
-}
-
-:host ::ng-deep .p-selectbutton .p-button.p-highlight {
-  background-color: #EA2264 !important;
-  border: 2px solid #EA2264 !important;
-  color: white !important;
-}
-
-:host ::ng-deep .p-selectbutton .p-button.p-highlight:hover {
-  background-color: #F78D60 !important;
-  border: 2px solid #F78D60 !important;
-}
-
 :host ::ng-deep .action-btn.p-button-success {
   background: linear-gradient(135deg, #F78D60 0%, #EA2264 100%) !important;
   border: 1px solid #F78D60 !important;
@@ -522,17 +545,26 @@
 
 @media (max-width: 480px) {
   :host ::ng-deep .p-datatable .p-datatable-thead > tr > th {
-    padding: 0.5rem 0.25rem;
-    font-size: 0.875rem;
+    padding: 0.5rem 0.25rem !important;
+    font-size: 0.75rem;
   }
-  
+
   :host ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
-    padding: 0.5rem 0.25rem;
-    font-size: 0.875rem;
+    padding: 0.5rem 0.25rem !important;
+    font-size: 0.75rem;
   }
-  
+
   :host ::ng-deep .p-inputtext {
     font-size: 0.875rem;
-    padding: 0.25rem;
+    padding: 0.5rem !important;
+  }
+
+  :host ::ng-deep .p-select {
+    font-size: 0.875rem;
+  }
+
+  :host ::ng-deep .p-button {
+    font-size: 0.875rem;
+    padding: 0.5rem 0.75rem !important;
   }
 }

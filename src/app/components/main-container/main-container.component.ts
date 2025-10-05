@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, NgOptimizedImage} from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { RecipeTableComponent } from '../recipe-table/recipe-table.component';
 import { GroceryTableComponent } from '../grocery-table/grocery-table.component';
@@ -26,12 +26,13 @@ import { SelectionService, SelectionItem } from '../../services/selection.servic
     RecipeEditModalComponent,
     IngredientsModalComponent,
     GroceryAddModalComponent,
-    GroceryDeleteModalComponent
+    GroceryDeleteModalComponent,
+    NgOptimizedImage
   ]
 })
 export class MainContainerComponent implements OnInit {
   // Active tab
-  activeTab: 'recipes' | 'groceries' = 'recipes';
+  activeTab: 'recipes' | 'groceries' | 'list' = 'recipes';
 
   // Recipe data
   recipes: Recipe[] = [];
@@ -43,6 +44,7 @@ export class MainContainerComponent implements OnInit {
 
   // Grocery data
   groceries: GroceryItem[] = [];
+  selectedGroceries: GroceryItem[] = [];
   showAddModal: boolean = false;
   showDeleteModal: boolean = false;
   deletingGrocery: GroceryItem | null = null;
@@ -75,6 +77,12 @@ export class MainContainerComponent implements OnInit {
           items.some(item => item.name.toLowerCase() === ingredient.toLowerCase())
         );
       });
+
+      // Update selected groceries based on current items
+      // A grocery should only be selected if it's in the items list
+      this.selectedGroceries = this.selectedGroceries.filter(grocery =>
+        items.some(item => item.name.toLowerCase() === grocery.name.toLowerCase())
+      );
     });
   }
 
@@ -138,6 +146,10 @@ export class MainContainerComponent implements OnInit {
 
   onGrocerySelected(grocery: GroceryItem) {
     this.selectionService.addItem(grocery.name);
+    // Track the selected grocery
+    if (!this.selectedGroceries.some(g => g.id === grocery.id)) {
+      this.selectedGroceries = [...this.selectedGroceries, grocery];
+    }
   }
 
   onDeleteGrocery(grocery: GroceryItem) {
@@ -171,7 +183,7 @@ export class MainContainerComponent implements OnInit {
     this.showAddModal = true;
   }
 
-  switchTab(tab: 'recipes' | 'groceries') {
+  switchTab(tab: 'recipes' | 'groceries' | 'list') {
     this.activeTab = tab;
   }
 }

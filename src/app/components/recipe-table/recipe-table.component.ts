@@ -5,7 +5,6 @@ import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { Select } from 'primeng/select';
-import { SelectButtonModule } from 'primeng/selectbutton';
 import { TooltipModule } from 'primeng/tooltip';
 import { Recipe } from '../../services/recipe.service';
 
@@ -14,7 +13,7 @@ import { Recipe } from '../../services/recipe.service';
   templateUrl: './recipe-table.component.html',
   styleUrl: './recipe-table.component.css',
   standalone: true,
-  imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, Select, SelectButtonModule, TooltipModule]
+  imports: [CommonModule, FormsModule, TableModule, ButtonModule, InputTextModule, Select, TooltipModule]
 })
 export class RecipeTableComponent implements OnChanges {
   @Input() recipes: Recipe[] = [];
@@ -28,15 +27,10 @@ export class RecipeTableComponent implements OnChanges {
   searchTerm: string = '';
   selectedType: string = '';
   selectedCuisine: string = '';
-  sortOrder: string = 'desc';
 
   // Dropdown options
   typeOptions: {label: string, value: string}[] = [];
   cuisineOptions: {label: string, value: string}[] = [];
-  sortOptions = [
-    { label: 'Newest First', value: 'desc' },
-    { label: 'Oldest First', value: 'asc' }
-  ];
 
   ngOnChanges() {
     console.log('ngOnChanges called, recipes length:', this.recipes.length);
@@ -149,27 +143,12 @@ export class RecipeTableComponent implements OnChanges {
     }
 
     this.filteredRecipes = filtered;
-    this.applySorting();
-  }
-
-  applySorting() {
-    this.filteredRecipes.sort((a, b) => {
-      const dateA = new Date(a.lastEaten);
-      const dateB = new Date(b.lastEaten);
-      
-      if (this.sortOrder === 'desc') {
-        return dateB.getTime() - dateA.getTime();
-      } else {
-        return dateA.getTime() - dateB.getTime();
-      }
-    });
   }
 
   clearAllFilters() {
     this.searchTerm = '';
     this.selectedType = '';
     this.selectedCuisine = '';
-    this.sortOrder = 'desc';
     this.applyFilters();
   }
 

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 export interface Recipe {
+  id: string;
   name: string;
   type: string;
   cuisine: string;
@@ -27,6 +28,6 @@ export class RecipeService {
     // This would typically make an HTTP PUT request to update the recipe
     // For now, we'll just console.log and return the recipe
     console.log('Recipe updated/saved', recipe);
-    return this.http.put<Recipe>(`${this.apiUrl}/update`, recipe);
+    return this.http.put<Recipe>(`${this.apiUrl}` + '/' + recipe.id, recipe);
   }
 }

@@ -33,6 +33,10 @@ export class ShoppingListComponent {
     this.selectionService.removeItem(item.name);
   }
 
+  clearAll() {
+    this.selectionService.clearAll();
+  }
+
   selectStore(item: SelectionItem, store: Store) {
     this.selectionService.setStore(item.name, store);
   }
@@ -61,7 +65,7 @@ export class ShoppingListComponent {
     Object.keys(itemsByStore).forEach(storeName => {
       formattedList += `* ${storeName} *\n`;
       itemsByStore[storeName].forEach(item => {
-        formattedList += `- ${item}\n`;
+        formattedList += `${item}\n`;
       });
       formattedList += '\n';
     });
@@ -69,7 +73,7 @@ export class ShoppingListComponent {
     // Add items without a store (no header)
     if (noStoreItems.length > 0) {
       noStoreItems.forEach(item => {
-        formattedList += `- ${item}\n`;
+        formattedList += `${item}\n`;
       });
     }
 

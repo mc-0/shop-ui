@@ -39,7 +39,7 @@ export class GroceriesComponent implements OnInit {
   onGrocerySelected(grocery: GroceryItem) {
     const index = this.selectedGroceries.findIndex(g => g.id === grocery.id);
     if (index === -1) {
-      this.selectedGroceries.push(grocery);
+      this.selectedGroceries = [...this.selectedGroceries, grocery];
     }
   }
 
