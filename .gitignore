@@ -34,12 +34,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# old angular files
-/angular.json
-/tsconfig.app.json
-/tsconfig.spec.json
-/.angular/
-
 # IDEs and editors
 .idea/
 .project
