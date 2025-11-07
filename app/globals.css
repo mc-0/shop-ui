@@ -1,0 +1,248 @@
+@import 'primereact/resources/themes/lara-dark-blue/theme.css';
+@import 'primereact/resources/primereact.min.css';
+@import 'primeicons/primeicons.css';
+
+/* Global dark theme for entire page */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0d1164 !important;
+  color: white;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Main container */
+.main-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+  min-height: 100vh;
+  background-color: #0d1164;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Header */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #640d5f 0%, #0d1164 100%);
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #640d5f;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+.brand-logo {
+  display: block;
+  max-height: 64px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Tab buttons */
+.tab-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.tab-btn {
+  min-width: 150px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  border: 2px solid #640d5f;
+  background: linear-gradient(135deg, #640d5f 0%, #0d1164 100%);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.tab-btn:hover {
+  background: linear-gradient(135deg, #ea2264 0%, #640d5f 100%);
+  border: 2px solid #ea2264;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(234, 34, 100, 0.4);
+}
+
+.tab-btn.active {
+  background: linear-gradient(135deg, #f78d60 0%, #ea2264 100%);
+  border: 2px solid #f78d60;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(247, 141, 96, 0.5);
+}
+
+.tab-btn.active:hover {
+  background: linear-gradient(135deg, #ea2264 0%, #f78d60 100%);
+  border: 2px solid #ea2264;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(247, 141, 96, 0.6);
+}
+
+.item-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 24px;
+  height: 24px;
+  padding: 0 0.5rem;
+  background: linear-gradient(135deg, #f78d60 0%, #ea2264 100%);
+  color: white;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 700;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Tab content */
+.main-content {
+  width: 100%;
+}
+
+.tab-content {
+  background: #111827;
+  border-radius: 12px;
+  padding: 1rem;
+  border: 1px solid #ea2264;
+}
+
+.tab-content.list-tab-content {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+
+.tab-header {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+/* Button styles */
+.btn {
+  padding: 0.75rem 1.25rem;
+  border-radius: 6px;
+  border: 2px solid;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-success {
+  background: #10b981;
+  border-color: #10b981;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #059669;
+  border-color: #059669;
+}
+
+.btn-info {
+  background: #f78d60;
+  border-color: #f78d60;
+  color: white;
+}
+
+.btn-info:hover {
+  background: #ea2264;
+  border-color: #ea2264;
+}
+
+.btn-danger {
+  background: #ef4444;
+  border-color: #ef4444;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+.btn-secondary {
+  background: #6b7280;
+  border-color: #6b7280;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #4b5563;
+  border-color: #4b5563;
+}
+
+/* PrimeReact overrides */
+.p-component {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Responsive layout */
+@media (max-width: 1024px) {
+  .main-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .main-container {
+    padding: 0.5rem;
+  }
+
+  .main-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .brand-logo {
+    max-height: 48px;
+  }
+
+  .tab-buttons {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  .tab-btn {
+    width: 100%;
+    min-width: auto;
+  }
+
+  .tab-content {
+    padding: 0.5rem;
+  }
+
+  .tab-content.list-tab-content {
+    padding: 0;
+  }
+
+  .tab-header {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tab-header .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
