@@ -1,11 +1,29 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Box,
+  InputAdornment,
+} from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import DeleteIcon from '@mui/icons-material/Delete';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
 import { GroceryItem, GROCERY_TYPES } from '../../types';
 import GroceryAddModal from './GroceryAddModal';
 import GroceryDeleteModal from './GroceryDeleteModal';
@@ -34,11 +52,6 @@ export default function GroceriesTab({
   const [selectedType, setSelectedType] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
   const [deletingGrocery, setDeletingGrocery] = useState<GroceryItem | null>(null);
-
-  const typeOptions = GROCERY_TYPES.map((type) => ({
-    label: type,
-    value: type.toLowerCase(),
-  }));
 
   useEffect(() => {
     applyFilters();
@@ -72,104 +85,138 @@ export default function GroceriesTab({
     return selectedGroceries.some((selected) => selected.id === grocery.id);
   };
 
-  const actionsBodyTemplate = (grocery: GroceryItem) => {
-    const isSelected = isGrocerySelected(grocery);
-    return (
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <Button
-          label="Add"
-          icon="pi pi-plus"
-          onClick={() => onGrocerySelected(grocery)}
-          severity="success"
-          size="small"
-          disabled={isSelected}
-        />
-        <Button
-          label="Delete"
-          icon="pi pi-trash"
-          onClick={() => setDeletingGrocery(grocery)}
-          severity="danger"
-          size="small"
-          disabled={isSelected}
-        />
-      </div>
-    );
-  };
-
-  const rowClassName = (grocery: GroceryItem) => {
-    return isGrocerySelected(grocery) ? 'selected-grocery' : '';
-  };
-
   return (
     <div className="tab-content">
       <div className="tab-header">
         <Button
-          label="Add Item"
-          icon="pi pi-plus"
+          variant="contained"
+          color="success"
+          startIcon={<AddIcon />}
           onClick={() => setShowAddModal(true)}
-          className="btn-success"
-        />
-        <Button label="Refresh" icon="pi pi-refresh" onClick={onRefresh} severity="info" />
+        >
+          Add Item
+        </Button>
+        <Button variant="contained" color="info" startIcon={<RefreshIcon />} onClick={onRefresh}>
+          Refresh
+        </Button>
       </div>
 
       <div className="grocery-table-container">
         {/* Filter Controls */}
-        <div className="filter-controls" style={{ marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <div className="search-control" style={{ position: 'relative', flex: '1 1 300px' }}>
-              <InputText
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search groceries..."
-                style={{ width: '100%' }}
-              />
-              <i
-                className="pi pi-search"
-                style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#6b7280',
-                }}
-              />
-            </div>
+        <Box sx={{ mb: 2, display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+          <TextField
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search groceries..."
+            size="small"
+            sx={{ flex: '1 1 300px' }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
 
-            <Dropdown
+          <FormControl size="small" sx={{ flex: '0 1 200px' }}>
+            <InputLabel>Type</InputLabel>
+            <Select
               value={selectedType}
-              options={typeOptions}
-              onChange={(e) => setSelectedType(e.value)}
-              placeholder="All Types"
-              showClear
-              style={{ flex: '0 1 200px' }}
-            />
+              onChange={(e) => setSelectedType(e.target.value)}
+              label="Type"
+            >
+              <MenuItem value="">All Types</MenuItem>
+              {GROCERY_TYPES.map((type) => (
+                <MenuItem key={type} value={type.toLowerCase()}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            <Button
-              label="Clear Filters"
-              icon="pi pi-filter-slash"
-              onClick={clearAllFilters}
-              severity="secondary"
-              size="small"
-            />
-          </div>
-        </div>
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            startIcon={<FilterAltOffIcon />}
+            onClick={clearAllFilters}
+          >
+            Clear Filters
+          </Button>
+        </Box>
 
         {/* Table */}
-        <DataTable
-          value={filteredGroceries}
-          scrollable
-          scrollHeight="400px"
-          loading={loading}
-          rowClassName={rowClassName}
-        >
-          <Column field="name" header="Name" style={{ minWidth: '200px' }} />
-          <Column field="type" header="Type" style={{ minWidth: '150px' }} />
-          <Column
-            header="Actions"
-            body={actionsBodyTemplate}
-            style={{ minWidth: '200px' }}
-          />
-        </DataTable>
+        <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ minWidth: 200 }}>Name</TableCell>
+                <TableCell sx={{ minWidth: 150 }}>Type</TableCell>
+                <TableCell sx={{ minWidth: 200 }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              ) : filteredGroceries.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={3} align="center">
+                    No groceries found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredGroceries.map((grocery) => {
+                  const isSelected = isGrocerySelected(grocery);
+                  return (
+                    <TableRow
+                      key={grocery.id}
+                      sx={{
+                        backgroundColor: isSelected ? 'rgba(139, 92, 246, 0.1)' : 'inherit',
+                        '&:hover': {
+                          backgroundColor: isSelected
+                            ? 'rgba(139, 92, 246, 0.15)'
+                            : 'rgba(255, 255, 255, 0.05)',
+                        },
+                      }}
+                    >
+                      <TableCell>{grocery.name}</TableCell>
+                      <TableCell>{grocery.type}</TableCell>
+                      <TableCell>
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            startIcon={<AddIcon />}
+                            onClick={() => onGrocerySelected(grocery)}
+                            disabled={isSelected}
+                          >
+                            Add
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            startIcon={<DeleteIcon />}
+                            onClick={() => setDeletingGrocery(grocery)}
+                            disabled={isSelected}
+                          >
+                            Delete
+                          </Button>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
 
       {/* Modals */}

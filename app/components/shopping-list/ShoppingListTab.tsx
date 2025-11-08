@@ -1,7 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from 'primereact/button';
+import { Button, Typography, Box, Paper, IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CloseIcon from '@mui/icons-material/Close';
 import { SelectionItem, STORES } from '../../types';
 import { useSelectionStore } from '../../lib/store';
 import ShoppingListModal from './ShoppingListModal';
@@ -77,93 +80,102 @@ export default function ShoppingListTab({ items }: ShoppingListTabProps) {
     <div className="tab-content list-tab-content">
       <div className="shopping-list-container">
         <div className="selected-items">
-          <div
-            className="header-row"
-            style={{
+          <Box
+            sx={{
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              marginBottom: '1rem',
+              mb: 2,
             }}
           >
-            <h2 style={{ margin: 0, color: 'white' }}>Shopping List ({items.length})</h2>
+            <Typography variant="h5" component="h2" sx={{ color: 'white', m: 0 }}>
+              Shopping List ({items.length})
+            </Typography>
             {items.length > 0 && (
               <Button
-                label="Clear All"
-                icon="pi pi-trash"
-                onClick={clearAll}
-                severity="danger"
+                variant="contained"
+                color="error"
                 size="small"
-              />
+                startIcon={<DeleteIcon />}
+                onClick={clearAll}
+              >
+                Clear All
+              </Button>
             )}
-          </div>
+          </Box>
 
           {items.length === 0 ? (
-            <p style={{ textAlign: 'center', color: '#6b7280', padding: '2rem' }}>
+            <Typography
+              sx={{ textAlign: 'center', color: 'text.secondary', py: 4 }}
+            >
               Add recipes or groceries to build your list
-            </p>
+            </Typography>
           ) : (
             <>
-              <div className="items-list" style={{ marginBottom: '1rem' }}>
+              <Box sx={{ mb: 2 }}>
                 {items.map((item) => (
-                  <div
+                  <Paper
                     key={item.name}
-                    className="item-row"
-                    style={{
+                    sx={{
                       display: 'flex',
                       justifyContent: 'space-between',
                       alignItems: 'center',
-                      padding: '1rem',
-                      marginBottom: '0.5rem',
+                      p: 2,
+                      mb: 1,
                       background: '#111827',
-                      borderRadius: '8px',
                       border: '1px solid #374151',
                     }}
                   >
-                    <div className="item-info">
-                      <span className="item-name" style={{ color: 'white', fontWeight: 500 }}>
-                        {item.name}
-                      </span>
-                    </div>
-                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                    <Typography sx={{ color: 'white', fontWeight: 500 }}>
+                      {item.name}
+                    </Typography>
+                    <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
                       {stores.map((store) => (
                         <Button
                           key={store}
-                          label={store}
                           onClick={() => selectStore(item, store)}
                           size="small"
-                          outlined={item.store !== store}
-                          severity={item.store === store ? 'info' : 'secondary'}
-                          style={{
+                          variant={item.store === store ? 'contained' : 'outlined'}
+                          color={item.store === store ? 'info' : 'secondary'}
+                          sx={{
                             minWidth: '60px',
-                            background: item.store === store ? '#f78d60' : undefined,
-                            borderColor: item.store === store ? '#f78d60' : undefined,
+                            ...(item.store === store && {
+                              bgcolor: '#f78d60',
+                              borderColor: '#f78d60',
+                              '&:hover': {
+                                bgcolor: '#e67850',
+                              },
+                            }),
                           }}
-                        />
+                        >
+                          {store}
+                        </Button>
                       ))}
-                      <Button
-                        icon="pi pi-times"
+                      <IconButton
                         onClick={() => removeItem(item.name)}
-                        severity="danger"
+                        color="error"
                         size="small"
-                        text
-                      />
-                    </div>
-                  </div>
+                      >
+                        <CloseIcon />
+                      </IconButton>
+                    </Box>
+                  </Paper>
                 ))}
-              </div>
+              </Box>
               <Button
-                label="Shop!"
-                icon="pi pi-shopping-cart"
+                variant="contained"
+                color="success"
+                startIcon={<ShoppingCartIcon />}
                 onClick={generateShoppingList}
-                severity="success"
-                style={{
-                  width: '100%',
-                  padding: '1rem',
+                fullWidth
+                sx={{
+                  py: 1.5,
                   fontSize: '1.1rem',
                   fontWeight: 600,
                 }}
-              />
+              >
+                Shop!
+              </Button>
             </>
           )}
         </div>

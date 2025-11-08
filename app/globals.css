@@ -1,9 +1,6 @@
-@import 'primereact/resources/themes/lara-dark-blue/theme.css';
-@import 'primereact/resources/primereact.min.css';
-@import 'primeicons/primeicons.css';
-
 /* ===================================
    DARK MODE THEME - READABILITY FOCUSED
+   Material UI Migration
    =================================== */
 
 /* CSS Variables for consistent theming */
@@ -296,39 +293,6 @@ p {
   border-color: var(--border-color);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
-}
-
-/* ===================================
-   PRIMEREACT OVERRIDES
-   =================================== */
-.p-component {
-  font-family: var(--font-sans);
-  line-height: var(--line-height-base);
-}
-
-/* Improve PrimeReact table readability */
-.p-datatable .p-datatable-tbody > tr {
-  color: var(--text-primary);
-}
-
-.p-datatable .p-datatable-tbody > tr:hover {
-  background: var(--bg-elevated);
-}
-
-/* Improve form input readability */
-.p-inputtext,
-.p-dropdown,
-.p-multiselect {
-  background: var(--bg-primary);
-  color: var(--text-primary);
-  border-color: var(--border-color);
-}
-
-.p-inputtext:enabled:focus,
-.p-dropdown:not(.p-disabled):hover,
-.p-multiselect:not(.p-disabled):hover {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 0.1rem rgba(139, 92, 246, 0.25);
 }
 
 /* ===================================

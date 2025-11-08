@@ -15,19 +15,24 @@
     "trailingComma": "es5"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.5",
+    "@mui/material": "^7.3.5",
+    "@mui/material-nextjs": "^7.3.5",
+    "@mui/x-date-pickers": "^8.17.0",
+    "date-fns": "^4.1.0",
     "next": "^14.2.18",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "primereact": "^10.8.3",
-    "primeicons": "^7.0.0",
     "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/node": "^22.9.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
-    "typescript": "^5.9.2",
     "eslint": "^8.57.1",
-    "eslint-config-next": "^14.2.18"
+    "eslint-config-next": "^14.2.18",
+    "typescript": "^5.9.2"
   }
 }
