@@ -1,10 +1,20 @@
 'use client';
 
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Toast } from 'primereact/toast';
-import { useRef } from 'react';
+import { useState } from 'react';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  Alert,
+  Box,
+  Snackbar,
+} from '@mui/material';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
+import CloseIcon from '@mui/icons-material/Close';
+import InfoIcon from '@mui/icons-material/Info';
 
 interface ShoppingListModalProps {
   visible: boolean;
@@ -17,84 +27,76 @@ export default function ShoppingListModal({
   shoppingList,
   onHide,
 }: ShoppingListModalProps) {
-  const toast = useRef<Toast>(null);
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' as 'success' | 'error' });
 
   const copyToClipboard = async () => {
     try {
       await navigator.clipboard.writeText(shoppingList);
-      toast.current?.show({
+      setSnackbar({
+        open: true,
+        message: 'Shopping list copied to clipboard',
         severity: 'success',
-        summary: 'Copied!',
-        detail: 'Shopping list copied to clipboard',
-        life: 3000,
       });
     } catch (err) {
-      toast.current?.show({
+      setSnackbar({
+        open: true,
+        message: 'Failed to copy to clipboard',
         severity: 'error',
-        summary: 'Error',
-        detail: 'Failed to copy to clipboard',
-        life: 3000,
       });
     }
   };
 
-  const footer = (
-    <div>
-      <Button label="Close" icon="pi pi-times" onClick={onHide} severity="secondary" />
-    </div>
-  );
-
   return (
     <>
-      <Dialog
-        header="Shopping List"
-        visible={visible}
-        style={{ width: '600px' }}
-        onHide={onHide}
-        footer={footer}
-        modal
-        draggable={false}
-        resizable={false}
-      >
-        <div>
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-              marginBottom: '1rem',
-              padding: '0.75rem',
-              background: '#eff6ff',
-              borderRadius: '6px',
-              color: '#1e40af',
-            }}
-          >
-            <i className="pi pi-info-circle" />
-            <span>Click the text area or the copy button below to copy your shopping list</span>
-          </div>
+      <Dialog open={visible} onClose={onHide} maxWidth="sm" fullWidth>
+        <DialogTitle>Shopping List</DialogTitle>
+        <DialogContent>
+          <Alert severity="info" icon={<InfoIcon />} sx={{ mb: 2 }}>
+            Click the text area or the copy button below to copy your shopping list
+          </Alert>
 
-          <InputTextarea
+          <TextField
             value={shoppingList}
+            multiline
             rows={15}
-            readOnly
+            fullWidth
             onClick={copyToClipboard}
             placeholder="Your shopping list will appear here..."
-            style={{ width: '100%', fontFamily: 'monospace' }}
+            InputProps={{
+              readOnly: true,
+              sx: { fontFamily: 'monospace' },
+            }}
           />
 
-          <div style={{ marginTop: '1rem' }}>
+          <Box sx={{ mt: 2 }}>
             <Button
-              label="Copy to Clipboard"
-              icon="pi pi-copy"
+              variant="contained"
+              color="info"
+              startIcon={<ContentCopyIcon />}
               onClick={copyToClipboard}
-              severity="info"
-              style={{ width: '100%' }}
-            />
-          </div>
-        </div>
+              fullWidth
+            >
+              Copy to Clipboard
+            </Button>
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={onHide} color="secondary" startIcon={<CloseIcon />}>
+            Close
+          </Button>
+        </DialogActions>
       </Dialog>
 
-      <Toast ref={toast} position="top-right" />
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={3000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert severity={snackbar.severity} onClose={() => setSnackbar({ ...snackbar, open: false })}>
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
     </>
   );
 }

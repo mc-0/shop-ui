@@ -1,7 +1,13 @@
 'use client';
 
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  Typography,
+} from '@mui/material';
 import { GroceryItem } from '../../types';
 
 interface GroceryDeleteModalProps {
@@ -22,30 +28,23 @@ export default function GroceryDeleteModal({
     onHide();
   };
 
-  const footer = (
-    <div>
-      <Button label="Cancel" onClick={onHide} severity="secondary" />
-      <Button label="Delete" onClick={handleConfirm} severity="danger" />
-    </div>
-  );
-
   return (
-    <Dialog
-      header="Confirm Delete"
-      visible={visible}
-      style={{ width: '400px' }}
-      onHide={onHide}
-      footer={footer}
-      modal
-      draggable={false}
-      resizable={false}
-    >
-      <div>
-        <p>
+    <Dialog open={visible} onClose={onHide} maxWidth="xs" fullWidth>
+      <DialogTitle>Confirm Delete</DialogTitle>
+      <DialogContent>
+        <Typography>
           Are you sure you want to delete <strong>{grocery?.name}</strong>?
-        </p>
-        <p style={{ color: '#ef4444' }}>This action cannot be undone.</p>
-      </div>
+        </Typography>
+        <Typography sx={{ color: 'error.main', mt: 1 }}>This action cannot be undone.</Typography>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onHide} color="secondary">
+          Cancel
+        </Button>
+        <Button onClick={handleConfirm} color="error" variant="contained">
+          Delete
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

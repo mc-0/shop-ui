@@ -1,11 +1,35 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
-import { Button } from 'primereact/button';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TextField,
+  Select,
+  MenuItem,
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  Box,
+  InputAdornment,
+  IconButton,
+  Link,
+  Typography,
+  TableSortLabel,
+} from '@mui/material';
+import RefreshIcon from '@mui/icons-material/Refresh';
+import AddIcon from '@mui/icons-material/Add';
+import EditIcon from '@mui/icons-material/Edit';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SearchIcon from '@mui/icons-material/Search';
+import FilterAltOffIcon from '@mui/icons-material/FilterAltOff';
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import { Recipe } from '../../types';
 import RecipeEditModal from './RecipeEditModal';
 import IngredientsModal from './IngredientsModal';
@@ -19,6 +43,9 @@ interface RecipesTabProps {
   loading: boolean;
 }
 
+type Order = 'asc' | 'desc';
+type OrderBy = 'name' | 'lastEaten';
+
 export default function RecipesTab({
   recipes,
   selectedRecipes,
@@ -31,10 +58,12 @@ export default function RecipesTab({
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState('');
   const [selectedCuisine, setSelectedCuisine] = useState('');
-  const [typeOptions, setTypeOptions] = useState<{ label: string; value: string }[]>([]);
-  const [cuisineOptions, setCuisineOptions] = useState<{ label: string; value: string }[]>([]);
+  const [typeOptions, setTypeOptions] = useState<string[]>([]);
+  const [cuisineOptions, setCuisineOptions] = useState<string[]>([]);
   const [editingRecipe, setEditingRecipe] = useState<Recipe | null>(null);
   const [viewingRecipe, setViewingRecipe] = useState<Recipe | null>(null);
+  const [order, setOrder] = useState<Order>('asc');
+  const [orderBy, setOrderBy] = useState<OrderBy>('name');
 
   useEffect(() => {
     if (recipes.length > 0) {
@@ -43,7 +72,7 @@ export default function RecipesTab({
     } else {
       setFilteredRecipes([]);
     }
-  }, [recipes, searchTerm, selectedType, selectedCuisine]);
+  }, [recipes, searchTerm, selectedType, selectedCuisine, order, orderBy]);
 
   const updateDropdownOptions = () => {
     // Get unique types
@@ -57,11 +86,7 @@ export default function RecipesTab({
         types.forEach((type) => allTypes.add(type));
       }
     });
-    setTypeOptions(
-      Array.from(allTypes)
-        .sort()
-        .map((type) => ({ label: type, value: type }))
-    );
+    setTypeOptions(Array.from(allTypes).sort());
 
     // Get unique cuisines
     const allCuisines = new Set<string>();
@@ -74,11 +99,7 @@ export default function RecipesTab({
         cuisines.forEach((cuisine) => allCuisines.add(cuisine));
       }
     });
-    setCuisineOptions(
-      Array.from(allCuisines)
-        .sort()
-        .map((cuisine) => ({ label: cuisine, value: cuisine }))
-    );
+    setCuisineOptions(Array.from(allCuisines).sort());
   };
 
   const applyFilters = () => {
@@ -116,6 +137,17 @@ export default function RecipesTab({
       });
     }
 
+    // Apply sorting
+    filtered.sort((a, b) => {
+      const aValue = a[orderBy] || '';
+      const bValue = b[orderBy] || '';
+      if (order === 'asc') {
+        return aValue < bValue ? -1 : aValue > bValue ? 1 : 0;
+      } else {
+        return aValue > bValue ? -1 : aValue < bValue ? 1 : 0;
+      }
+    });
+
     setFilteredRecipes(filtered);
   };
 
@@ -129,156 +161,204 @@ export default function RecipesTab({
     return selectedRecipes.some((selected) => selected.name === recipe.name);
   };
 
-  const recipeNameBodyTemplate = (recipe: Recipe) => {
-    return (
-      <div className="recipe-info">
-        <div className="recipe-name">
-          {recipe.url && recipe.url.trim() ? (
-            <a href={recipe.url} target="_blank" rel="noopener" className="recipe-link">
-              {recipe.name}
-              <i className="pi pi-external-link link-icon" style={{ marginLeft: '0.5rem' }} />
-            </a>
-          ) : (
-            recipe.name
-          )}
-        </div>
-        <div className="recipe-meta">
-          {recipe.type} • {recipe.cuisine}
-        </div>
-      </div>
-    );
-  };
-
-  const ingredientsBodyTemplate = (recipe: Recipe) => {
-    return (
-      <Button
-        icon="pi pi-eye"
-        onClick={() => setViewingRecipe(recipe)}
-        severity="secondary"
-        text
-        size="small"
-      />
-    );
-  };
-
-  const actionsBodyTemplate = (recipe: Recipe) => {
-    const isSelected = isRecipeSelected(recipe);
-    return (
-      <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <Button
-          label="Add"
-          icon="pi pi-plus"
-          onClick={() => onRecipeSelected(recipe)}
-          severity="success"
-          size="small"
-          disabled={isSelected}
-        />
-        <Button
-          label="Edit"
-          icon="pi pi-pencil"
-          onClick={() => setEditingRecipe(recipe)}
-          severity="info"
-          size="small"
-          disabled={isSelected}
-        />
-      </div>
-    );
-  };
-
-  const rowClassName = (recipe: Recipe) => {
-    return isRecipeSelected(recipe) ? 'selected-recipe' : '';
+  const handleRequestSort = (property: OrderBy) => {
+    const isAsc = orderBy === property && order === 'asc';
+    setOrder(isAsc ? 'desc' : 'asc');
+    setOrderBy(property);
   };
 
   return (
     <div className="tab-content">
       <div className="tab-header">
-        <Button label="Refresh Recipes" icon="pi pi-refresh" onClick={onRefresh} severity="info" />
+        <Button variant="contained" color="info" startIcon={<RefreshIcon />} onClick={onRefresh}>
+          Refresh Recipes
+        </Button>
       </div>
 
       <div className="recipe-table-container">
         {/* Filter Controls */}
-        <div className="filter-controls" style={{ marginBottom: '1rem' }}>
-          <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
-            <div className="search-control" style={{ position: 'relative', flex: '1 1 300px' }}>
-              <InputText
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search recipes..."
-                style={{ width: '100%' }}
-              />
-              <i
-                className="pi pi-search"
-                style={{
-                  position: 'absolute',
-                  right: '10px',
-                  top: '50%',
-                  transform: 'translateY(-50%)',
-                  color: '#6b7280',
-                }}
-              />
-            </div>
+        <Box sx={{ mb: 2, display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+          <TextField
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search recipes..."
+            size="small"
+            sx={{ flex: '1 1 300px' }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
 
-            <Dropdown
+          <FormControl size="small" sx={{ flex: '0 1 200px' }}>
+            <InputLabel>Type</InputLabel>
+            <Select
               value={selectedType}
-              options={typeOptions}
-              onChange={(e) => setSelectedType(e.value)}
-              placeholder="All Types"
-              showClear
-              style={{ flex: '0 1 200px' }}
-            />
+              onChange={(e) => setSelectedType(e.target.value)}
+              label="Type"
+            >
+              <MenuItem value="">All Types</MenuItem>
+              {typeOptions.map((type) => (
+                <MenuItem key={type} value={type}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            <Dropdown
+          <FormControl size="small" sx={{ flex: '0 1 200px' }}>
+            <InputLabel>Cuisine</InputLabel>
+            <Select
               value={selectedCuisine}
-              options={cuisineOptions}
-              onChange={(e) => setSelectedCuisine(e.value)}
-              placeholder="All Cuisines"
-              showClear
-              style={{ flex: '0 1 200px' }}
-            />
+              onChange={(e) => setSelectedCuisine(e.target.value)}
+              label="Cuisine"
+            >
+              <MenuItem value="">All Cuisines</MenuItem>
+              {cuisineOptions.map((cuisine) => (
+                <MenuItem key={cuisine} value={cuisine}>
+                  {cuisine}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
 
-            <Button
-              label="Clear Filters"
-              icon="pi pi-filter-slash"
-              onClick={clearAllFilters}
-              severity="secondary"
-              size="small"
-            />
-          </div>
-        </div>
+          <Button
+            variant="outlined"
+            color="secondary"
+            size="small"
+            startIcon={<FilterAltOffIcon />}
+            onClick={clearAllFilters}
+          >
+            Clear Filters
+          </Button>
+        </Box>
 
         {/* Table */}
-        <DataTable
-          value={filteredRecipes}
-          scrollable
-          scrollHeight="400px"
-          loading={loading}
-          rowClassName={rowClassName}
-          sortMode="single"
-        >
-          <Column
-            field="name"
-            header="Recipe"
-            body={recipeNameBodyTemplate}
-            sortable
-            style={{ minWidth: '250px' }}
-          />
-          <Column
-            field="lastEaten"
-            header="Last Eaten"
-            sortable
-            style={{ minWidth: '120px' }}
-          />
-          <Column
-            header="Ingredients"
-            body={ingredientsBodyTemplate}
-            style={{ width: '100px', textAlign: 'center' }}
-          />
-          <Column
-            header="Actions"
-            body={actionsBodyTemplate}
-            style={{ minWidth: '200px' }}
-          />
-        </DataTable>
+        <TableContainer component={Paper} sx={{ maxHeight: 400 }}>
+          <Table stickyHeader>
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ minWidth: 250 }}>
+                  <TableSortLabel
+                    active={orderBy === 'name'}
+                    direction={orderBy === 'name' ? order : 'asc'}
+                    onClick={() => handleRequestSort('name')}
+                  >
+                    Recipe
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell sx={{ minWidth: 120 }}>
+                  <TableSortLabel
+                    active={orderBy === 'lastEaten'}
+                    direction={orderBy === 'lastEaten' ? order : 'asc'}
+                    onClick={() => handleRequestSort('lastEaten')}
+                  >
+                    Last Eaten
+                  </TableSortLabel>
+                </TableCell>
+                <TableCell sx={{ width: 100, textAlign: 'center' }}>Ingredients</TableCell>
+                <TableCell sx={{ minWidth: 200 }}>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {loading ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    <CircularProgress />
+                  </TableCell>
+                </TableRow>
+              ) : filteredRecipes.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No recipes found
+                  </TableCell>
+                </TableRow>
+              ) : (
+                filteredRecipes.map((recipe) => {
+                  const isSelected = isRecipeSelected(recipe);
+                  return (
+                    <TableRow
+                      key={recipe.id}
+                      sx={{
+                        backgroundColor: isSelected ? 'rgba(139, 92, 246, 0.1)' : 'inherit',
+                        '&:hover': {
+                          backgroundColor: isSelected
+                            ? 'rgba(139, 92, 246, 0.15)'
+                            : 'rgba(255, 255, 255, 0.05)',
+                        },
+                      }}
+                    >
+                      <TableCell>
+                        <Box>
+                          {recipe.url && recipe.url.trim() ? (
+                            <Link
+                              href={recipe.url}
+                              target="_blank"
+                              rel="noopener"
+                              sx={{
+                                color: 'primary.light',
+                                textDecoration: 'none',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 0.5,
+                                '&:hover': { textDecoration: 'underline' },
+                              }}
+                            >
+                              {recipe.name}
+                              <OpenInNewIcon sx={{ fontSize: 16 }} />
+                            </Link>
+                          ) : (
+                            <Typography>{recipe.name}</Typography>
+                          )}
+                          <Typography variant="caption" color="text.secondary">
+                            {recipe.type} • {recipe.cuisine}
+                          </Typography>
+                        </Box>
+                      </TableCell>
+                      <TableCell>{recipe.lastEaten}</TableCell>
+                      <TableCell align="center">
+                        <IconButton
+                          size="small"
+                          onClick={() => setViewingRecipe(recipe)}
+                          color="secondary"
+                        >
+                          <VisibilityIcon />
+                        </IconButton>
+                      </TableCell>
+                      <TableCell>
+                        <Box sx={{ display: 'flex', gap: 1 }}>
+                          <Button
+                            variant="contained"
+                            color="success"
+                            size="small"
+                            startIcon={<AddIcon />}
+                            onClick={() => onRecipeSelected(recipe)}
+                            disabled={isSelected}
+                          >
+                            Add
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="info"
+                            size="small"
+                            startIcon={<EditIcon />}
+                            onClick={() => setEditingRecipe(recipe)}
+                            disabled={isSelected}
+                          >
+                            Edit
+                          </Button>
+                        </Box>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })
+              )}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </div>
 
       {/* Modals */}

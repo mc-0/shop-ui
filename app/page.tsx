@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import ShoppingBagIcon from '@mui/icons-material/ShoppingBag';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { Recipe, GroceryItem } from './types';
 import { recipeApi, groceryApi } from './lib/api';
 import { useSelectionStore } from './lib/store';
@@ -136,21 +139,21 @@ export default function Home() {
             className={`tab-btn ${activeTab === 'recipes' ? 'active' : ''}`}
             onClick={() => setActiveTab('recipes')}
           >
-            <i className="pi pi-book" />
+            <MenuBookIcon />
             Recipes
           </button>
           <button
             className={`tab-btn ${activeTab === 'groceries' ? 'active' : ''}`}
             onClick={() => setActiveTab('groceries')}
           >
-            <i className="pi pi-shopping-bag" />
+            <ShoppingBagIcon />
             Groceries
           </button>
           <button
             className={`tab-btn ${activeTab === 'list' ? 'active' : ''}`}
             onClick={() => setActiveTab('list')}
           >
-            <i className="pi pi-list" />
+            <ListAltIcon />
             <span>List</span>
             {items.length > 0 && <span className="item-count-badge">{items.length}</span>}
           </button>

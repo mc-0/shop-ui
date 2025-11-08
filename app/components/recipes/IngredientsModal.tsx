@@ -1,7 +1,21 @@
 'use client';
 
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Box,
+  Typography,
+} from '@mui/material';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import InfoIcon from '@mui/icons-material/Info';
+import CloseIcon from '@mui/icons-material/Close';
 import { Recipe } from '../../types';
 
 interface IngredientsModalProps {
@@ -11,48 +25,39 @@ interface IngredientsModalProps {
 }
 
 export default function IngredientsModal({ recipe, visible, onHide }: IngredientsModalProps) {
-  const footer = (
-    <div>
-      <Button label="Close" icon="pi pi-times" onClick={onHide} severity="secondary" />
-    </div>
-  );
-
   return (
-    <Dialog
-      header={`Ingredients - ${recipe?.name || 'Recipe'}`}
-      visible={visible}
-      style={{ width: '500px' }}
-      onHide={onHide}
-      footer={footer}
-      modal
-      draggable={false}
-      resizable={false}
-    >
-      <div className="ingredients-content">
+    <Dialog open={visible} onClose={onHide} maxWidth="sm" fullWidth>
+      <DialogTitle>Ingredients - {recipe?.name || 'Recipe'}</DialogTitle>
+      <DialogContent>
         {recipe && recipe.ingredients && recipe.ingredients.length > 0 ? (
-          <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+          <List sx={{ py: 0 }}>
             {recipe.ingredients.map((ingredient, index) => (
-              <li
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.5rem 0',
-                }}
-              >
-                <i className="pi pi-check-circle" style={{ color: '#10b981' }} />
-                <span>{ingredient}</span>
-              </li>
+              <ListItem key={index} sx={{ px: 0 }}>
+                <ListItemIcon sx={{ minWidth: 36 }}>
+                  <CheckCircleIcon color="success" />
+                </ListItemIcon>
+                <ListItemText primary={ingredient} />
+              </ListItem>
             ))}
-          </ul>
+          </List>
         ) : (
-          <div style={{ textAlign: 'center', padding: '2rem', color: '#6b7280' }}>
-            <i className="pi pi-info-circle" style={{ fontSize: '2rem', marginBottom: '1rem' }} />
-            <p>No ingredients listed for this recipe</p>
-          </div>
+          <Box
+            sx={{
+              textAlign: 'center',
+              py: 4,
+              color: 'text.secondary',
+            }}
+          >
+            <InfoIcon sx={{ fontSize: '3rem', mb: 2 }} />
+            <Typography>No ingredients listed for this recipe</Typography>
+          </Box>
         )}
-      </div>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onHide} color="secondary" startIcon={<CloseIcon />}>
+          Close
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }

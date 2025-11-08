@@ -1,10 +1,19 @@
 'use client';
 
 import { useState } from 'react';
-import { Dialog } from 'primereact/dialog';
-import { Button } from 'primereact/button';
-import { InputText } from 'primereact/inputtext';
-import { Dropdown } from 'primereact/dropdown';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Box,
+} from '@mui/material';
 import { GROCERY_TYPES } from '../../types';
 
 interface GroceryAddModalProps {
@@ -15,11 +24,6 @@ interface GroceryAddModalProps {
 
 export default function GroceryAddModal({ visible, onHide, onSave }: GroceryAddModalProps) {
   const [newItem, setNewItem] = useState({ name: '', type: '' });
-
-  const typeOptions = GROCERY_TYPES.map((type) => ({
-    label: type,
-    value: type.toLowerCase(),
-  }));
 
   const handleSave = () => {
     if (newItem.name.trim() && newItem.type) {
@@ -45,57 +49,44 @@ export default function GroceryAddModal({ visible, onHide, onSave }: GroceryAddM
     return newItem.name.trim().length > 0 && newItem.type.length > 0;
   };
 
-  const footer = (
-    <div>
-      <Button label="Cancel" onClick={handleCancel} severity="secondary" />
-      <Button
-        label="Add Item"
-        onClick={handleSave}
-        disabled={!isFormValid()}
-        severity="success"
-      />
-    </div>
-  );
-
   return (
-    <Dialog
-      header="Add Grocery Item"
-      visible={visible}
-      style={{ width: '500px' }}
-      onHide={handleCancel}
-      footer={footer}
-      modal
-      draggable={false}
-      resizable={false}
-    >
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div>
-          <label htmlFor="itemName" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Name
-          </label>
-          <InputText
-            id="itemName"
+    <Dialog open={visible} onClose={handleCancel} maxWidth="sm" fullWidth>
+      <DialogTitle>Add Grocery Item</DialogTitle>
+      <DialogContent>
+        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
+          <TextField
+            label="Name"
             value={newItem.name}
             onChange={(e) => setNewItem({ ...newItem, name: e.target.value })}
             placeholder="Enter item name"
-            style={{ width: '100%' }}
+            fullWidth
+            autoFocus
           />
-        </div>
 
-        <div>
-          <label htmlFor="itemType" style={{ display: 'block', marginBottom: '0.5rem' }}>
-            Type
-          </label>
-          <Dropdown
-            id="itemType"
-            value={newItem.type}
-            options={typeOptions}
-            onChange={(e) => setNewItem({ ...newItem, type: e.value })}
-            placeholder="Select type"
-            style={{ width: '100%' }}
-          />
-        </div>
-      </div>
+          <FormControl fullWidth>
+            <InputLabel>Type</InputLabel>
+            <Select
+              value={newItem.type}
+              onChange={(e) => setNewItem({ ...newItem, type: e.target.value })}
+              label="Type"
+            >
+              {GROCERY_TYPES.map((type) => (
+                <MenuItem key={type} value={type.toLowerCase()}>
+                  {type}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCancel} color="secondary">
+          Cancel
+        </Button>
+        <Button onClick={handleSave} disabled={!isFormValid()} color="success" variant="contained">
+          Add Item
+        </Button>
+      </DialogActions>
     </Dialog>
   );
 }
